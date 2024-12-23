@@ -1,0 +1,1 @@
+throw new Error("`ws13` does not work in the browser. Browser clients must use the native WebSocket object");

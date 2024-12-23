@@ -1,0 +1,511 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket API [version 13]</title>
+</head>
+<body>
+
+    <div class="row w-100">
+<div class="col-3 d-none d-lg-inline">
+<div class="sticky-top overflow-auto vh-100">
+<div id="list-headers" class="list-group mt-5">
+<ul>
+<li><a href="#websocket-api-version-13"><strong>WebSocket API</strong></a>
+<ul>
+<li><a href="#description">Description</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#testing">Testing</a></li>
+<li><a href="#license">License</a></li>
+<li><a href="#usage">Usage</a></li>
+</ul>
+</li>
+<li><a href="#websocket"><strong>WebSocket</strong> - interface</a>
+<ul>
+<li><a href="#constructors-of-websocket">Constructors</a></li>
+<li><a href="#static-properties-of-websocket">Static properties</a></li>
+<li><a href="#instance-properties-of-websocket">Instance properties</a></li>
+<li><a href="#instance-methods-of-websocket">Instance methods</a></li>
+<li><a href="#events-of-websocket">Events</a></li>
+</ul>
+</li>
+<li><a href="#ready-state-constants"><strong>Ready state constants</strong></a></li>
+<li><a href="#extension"><strong>Extension</strong> - interface</a>
+<ul>
+<li><a href="#constructors-of-extension">Constructors</a></li>
+<li><a href="#instance-methods-of-extension">Instance methods</a></li>
+</ul>
+</li>
+<li><a href="#frame"><strong>Frame</strong> - interface</a>
+<ul>
+<li><a href="#instance-properties-of-frame">Instance properties</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+ 
+<div class="col">
+<div class="p-2 markdown-body" data-bs-spy="scroll" data-bs-target="#list-headers" data-bs-offset="0" tabindex="0">
+<h1 id="websocket-api-version-13">WebSocket API [version 13]<!--<a href="./README.html" target="_blank"><img border="0" alt="external" src="./external_link_alt.png"></a>--></h1>
+<h2 id="description">Description</h2>
+<p>The WebSocket API is an advanced technology that makes it
+possible to open a two-way interactive communication session
+between the user's browser and a server. With this API,
+you can send messages to a server and receive event-driven
+responses without having to poll the server for a reply.</p>
+<p>Common use cases for the WebSocket API include:</p>
+<ol>
+<li><p><strong>Real-time updates:</strong> Applications that require real-time data updates, such as live sports scores, stock market updates, or live news feeds.</p>
+</li>
+<li><p><strong>Chat applications:</strong> Instant messaging and chat applications where low latency and real-time communication are crucial.</p>
+</li>
+<li><p><strong>Online gaming:</strong> Multiplayer online games that need real-time interaction between players.</p>
+</li>
+<li><p><strong>Collaborative tools:</strong> Applications like collaborative document editing, where multiple users need to see changes in real-time.</p>
+</li>
+<li><p><strong>IoT (Internet of Things):</strong> Communication between IoT devices and servers for real-time data exchange and control.</p>
+</li>
+<li><p><strong>Live streaming:</strong> Streaming live audio, video, or other media content to clients.</p>
+</li>
+<li><p><strong>Notifications:</strong> Sending real-time notifications to users, such as alerts or updates in web applications.
+These use cases benefit from WebSocket's ability to maintain a persistent connection, allowing for efficient and low-latency communication between the client and server.</p>
+</li>
+</ol>
+<p>The WebSocket API is defined by the <a href="https://html.spec.whatwg.org/multipage/web-sockets.html#the-websocket-interface">WebSocket</a> interface, which is part of the <a href="https://html.spec.whatwg.org/multipage/">HTML Living Standard</a>. The API provides a set of methods, properties, and events that enable developers to create WebSocket connections and interact with them in a web application.</p>
+<h2 id="features">Features</h2>
+<p>The WebSocket API offers several key features that make it a powerful tool for building real-time web applications:</p>
+<ol>
+<li><p><strong>Full-duplex communication</strong>: WebSockets enable full-duplex communication between the client and server, allowing both parties to send and receive messages simultaneously. This bidirectional communication is essential for real-time applications that require low latency and high interactivity.</p>
+</li>
+<li><p><strong>Persistent connection</strong>: Unlike traditional HTTP connections, which are stateless and short-lived, WebSocket connections are persistent and long-lived. Once established, a WebSocket connection remains open until either the client or server decides to close it. This persistent connection eliminates the need to establish a new connection for each message, reducing latency and overhead.</p>
+</li>
+<li><p><strong>Low latency</strong>: WebSockets provide low-latency communication by eliminating the need for repeated handshakes and headers in each message exchange. This efficiency allows real-time data to be transmitted quickly and responsively, making WebSockets ideal for applications that require instant updates and notifications.</p>
+</li>
+<li><p><strong>Efficient data transfer</strong>: WebSockets use a binary messaging format that is more compact and efficient than text-based formats like JSON or XML. This binary format reduces the size of messages sent over the network, improving performance and reducing bandwidth consumption.</p>
+</li>
+<li><p><strong>Cross-origin communication</strong>: WebSockets support cross-origin communication, allowing clients to establish connections with servers hosted on different domains. This feature enables developers to build distributed systems and integrate services from multiple sources in a secure and controlled manner.</p>
+</li>
+<li><p><strong>Secure communication</strong>: WebSockets can be used over secure connections (wss://) to encrypt data transmitted between the client and server. This encryption ensures that sensitive information is protected from eavesdropping and tampering, making WebSockets a secure choice for transmitting confidential data.</p>
+</li>
+<li><p><strong>Event-driven architecture</strong>: The WebSocket API is event-driven, meaning that clients and servers can respond to specific events, such as message reception, connection establishment, or connection closure. This event-driven architecture simplifies the development of real-time applications by providing a clear and structured way to handle asynchronous communication.</p>
+</li>
+</ol>
+<h2 id="installation">Installation</h2>
+<p>You can install <code>ws13</code> using this command:</p>
+<p><code>npm install ws13</code></p>
+<h2 id="testing">Testing</h2>
+<p>You can test <code>ws13</code> on your system using this command:</p>
+<p><code>node ./node_modules/ws13/index.test</code></p>
+<p>or in the <code>ws13</code> project directory:</p>
+<p><code>npm test</code></p>
+<h2 id="license">License</h2>
+<p>This project is licensed under the MIT License.</p>
+<p><a href="https://www.paypal.com/donate?hosted_button_id=4DAKNYHBD9MNC"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="Donate" /></a></p>
+<h2 id="usage">Usage</h2>
+<p><strong>Example of use on a server</strong></p>
+<pre><code class="language-js">const { createServer } = require('node:http');
+const WebSocket = require('ws13');
+
+const server = createServer();
+let wsList = [];
+
+server.on('upgrade', function (request) {
+    // upgrade WebSocket
+    const websocket = new WebSocket({
+        // isDebug: true,
+        request,
+        // protocol: '',
+        // origin: 'http://localhost',
+        // heartbeatInterval_ms: 30000, /* in milliseconds */
+        // extension: null, /* Default `permessage-deflate`. */
+    });
+
+    // has WebSocket, the handshake is done
+    if (websocket) {
+        // inserts a WebSocket from the list
+        wsList.push(websocket);
+
+        // add listeners
+        websocket
+            .on('error', console.error)
+            .on('open', function () {
+                /* now you can send and receive messages */
+            })
+            .on('message', function (event) {
+                // send to everyone
+                wsList.forEach((ws) =&gt; { ws.send(event.data); });
+            })
+            .on('close', function () {
+                // removing a WebSocket from the list
+                wsList = wsList.filter(ws =&gt; ws !== websocket);
+            });
+    } else {
+        // handshake not accepted
+        request.destroy();
+    }
+});
+
+</code></pre>
+<p><strong>Example of use as a client</strong></p>
+<p>In the client role, a browser-compatible implementation of
+<a href="https://nodejs.org/docs/latest/api/http.html#websocket">WebSocket</a>
+should be preferred, which should provide better results.</p>
+<p>If it is important that the same code runs on the client and server side,
+then do the following.</p>
+<pre><code class="language-js">const http = require('node:http');
+const WebSocket = require('ws13');
+
+const ws = new WebSocket({
+    // isDebug: true,
+    request: http.request({ hostname: '127.0.0.1', port: 80, path: '/test' }),
+    // protocol: '',
+    // origin: 'http://127.0.0.1',
+    // extension: null, /* Default `permessage-deflate`. */
+})
+    .on('error', console.error)
+    .on('open', function () {
+        /* now you can send and receive messages */
+        ws.heartbeat(function (latency_ms) { console.log('client latency_ms', latency_ms); });
+        ws.send('Hello, World!');
+    })
+    .on('message', function (event) { console.log('client data', event.data); })
+    .on('ping', function (event) { console.log('client ping', event); })
+    .on('pong', function (event) { console.log('client pong', event); })
+    .on('close', function () { console.log('client websocket is closed'); });
+</code></pre>
+<p><strong>Example of use as a client in the browser</strong></p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;WebSocket&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;script&gt;
+        const ws = new WebSocket('ws://localhost:3000/test');
+        ws.onopen = function () {
+            ws.send('Hello, World!');
+        };
+        ws.onmessage = function (event) {
+            console.log('server data', event.data);
+        };
+        ws.onclose = function () {
+            console.log('client websocket is closed');
+        };
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><strong>Secure communication</strong></p>
+<p>To use secure communication, you need to use the <code>https</code> module and the <code>wss</code> protocol.</p>
+<p><strong>Example of use on a server</strong></p>
+<pre><code class="language-js">const { createServer } = require('node:https');
+const WebSocket = require('ws13');
+
+const server = createServer({
+    key: fs.readFileSync('server-key.pem'),
+    cert: fs.readFileSync('server-cert.pem')
+});
+
+let wsList = [];
+
+server.on('upgrade', function (request) {
+    // upgrade WebSocket
+    const websocket = new WebSocket({
+        // isDebug: true,
+        request,
+        // protocol: '',
+        // origin: 'https://localhost',
+        // heartbeatInterval_ms: 30000, /* in milliseconds */
+        // extension: null, /* Default `permessage-deflate`. */
+    });
+    // has WebSocket, the handshake is done
+    if (websocket) {
+        // inserts a WebSocket from the list
+        wsList.push(websocket);
+        // add listeners
+        websocket
+            .on('error', console.error)
+            .on('open', function () {
+                /* now you can send and receive messages */
+            })
+            .on('message', function (event) {
+                // send to everyone
+                wsList.forEach((ws) =&gt; { ws.send(event.data); });
+            })
+            .on('close', function () {
+                // removing a WebSocket from the list
+                wsList = wsList.filter(ws =&gt; ws !== websocket);
+            });
+    } else {
+        // handshake not accepted
+        request.destroy();
+    }
+});
+</code></pre>
+<h2 id="websocket">WebSocket</h2>
+<p>The <code>WebSocket</code> interface is the main interface for the WebSocket API.</p>
+<p>It extends the <a href="https://nodejs.org/docs/latest/api/events.html"><code>EventEmitter</code></a>.</p>
+<h3 id="constructors-of-websocket">Constructors of WebSocket</h3>
+<p><strong>constructor:</strong> <code>WebSocket(options)</code> Returns a newly created WebSocket object.</p>
+<p>constructor parameters:</p>
+<ul>
+<li><strong>parameter:</strong> <code>options</code> Type <code>object</code>.
+<ul>
+<li><code>isDebug</code> Value type <code>boolean</code>. If set to <code>true</code>, more info in console. Default <code>false</code>.</li>
+<li><code>request</code> Value type <code>http.IncomingMessage</code> or <code>http.ClientRequest</code>. Reference (role of server <a href="https://nodejs.org/docs/latest/api/http.html#class-httpincomingmessage">http.IncomingMessage</a>) or (role of client <a href="https://nodejs.org/docs/latest/api/http.html#class-httpclientrequest">http.ClientRequest</a>)</li>
+<li><code>headers</code> Value type <code>object</code>. Key-value pairs of header names and values. Header names are lower-cased. Default <code>request.headers</code>.</li>
+<li><code>socket</code> Value type <code>net.Socket</code>. This class is an abstraction of a TCP socket or a streaming IPC endpoint. Default <code>request.socket</code>.</li>
+<li><code>protocol</code> Value type <code>string</code>. The <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#subprotocols">sub-protocol</a> selected by the server. Default empty string.</li>
+<li><code>origin</code> Value type <code>string</code>. String or validation function <code>(origin:string)=&gt;boolean</code>. Default empty string.</li>
+<li><code>heartbeatInterval_ms</code> Value type <code>number</code>. The interval after which ping pong takes place. Default <code>30000</code>.</li>
+<li><code>extension</code> Value type <code>Extension | null</code>. WebSocket selected extensions or <code>null</code>. Default <code>permessage-deflate</code>.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong><a href="./permessage-deflate.js">permessage-deflate</a></strong> is a WebSocket extension that allows messages to be compressed before being sent over the network.
+This can significantly reduce the amount of data transmitted, especially for large messages or messages with repetitive content, improving performance and reducing bandwidth usage.</p>
+<p><strong>Benefits of permessage-deflate:</strong></p>
+<ol>
+<li><strong>Reduced Bandwidth Usage:</strong> Compressing messages can lower the amount of data sent over the network, which is particularly beneficial for applications with limited bandwidth.</li>
+<li><strong>Improved Performance:</strong> Smaller message sizes can lead to faster transmission times, enhancing the overall performance of real-time applications.</li>
+<li><strong>Cost Savings:</strong> Lower bandwidth usage can result in cost savings, especially for applications that handle a large volume of data.</li>
+</ol>
+</blockquote>
+<h3 id="static-properties-of-websocket">Static properties of WebSocket</h3>
+<ul>
+<li><strong>property:</strong> <code>WebSocket.CONNECTING</code> Value <code>0</code>. The connection is not yet open.</li>
+<li><strong>property:</strong> <code>WebSocket.OPEN</code> Value <code>1</code>. The connection is open and ready to communicate.</li>
+<li><strong>property:</strong> <code>WebSocket.CLOSING</code> Value <code>2</code>. The connection is in the process of closing.</li>
+<li><strong>property:</strong> <code>WebSocket.CLOSED</code> Value <code>3</code>. The connection is closed.</li>
+</ul>
+<h3 id="instance-properties-of-websocket">Instance properties of WebSocket</h3>
+<ul>
+<li><strong>property:</strong> <code>ws.readyState</code> Value <code>0 | 1 | 2 | 3</code>.
+The connection <a href="#ready-state-constants">state</a>.</li>
+<li><strong>property:</strong> <code>ws.protocol</code> Value type <code>string</code>.
+Returns the name of the <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#subprotocols">sub-protocol</a>
+the server selected; this will be one of the strings specified in the protocols
+parameter when creating the WebSocket object, or the empty string if no connection is established.</li>
+<li><strong>property:</strong> <code>ws.path</code> Value type <code>string</code>.</li>
+<li><strong>property:</strong> <code>ws.origin</code> Value type <code>string</code>.</li>
+<li><strong>property:</strong> <code>ws.heartbeatInterval_ms</code> Value type <code>number</code>.</li>
+<li><strong>property:</strong> <code>ws.ip</code> Value type <code>string</code>. IP address</li>
+<li><strong>property:</strong> <code>ws.port</code> Value type <code>number</code>. Port number</li>
+<li><strong>property:</strong> <code>ws.latency_ms</code> Value type <code>number</code>.
+Latency describes the amount of delay on a network or Internet connection.
+Low latency implies that there are no or almost no delays.
+High latency implies that there are many delays.
+One of the main aims of improving performance is to reduce latency.</li>
+</ul>
+<h3 id="instance-methods-of-websocket">Instance methods of WebSocket</h3>
+<ul>
+<li><strong>method:</strong> <code>ws.close()</code> Returns <code>undefined</code>. Closes the connection.</li>
+<li><strong>method:</strong> <code>ws.heartbeat(callback:(latency_ms:number)=&gt;void)</code> Returns <code>undefined</code>.
+Initiates a ping-pong procedure by measuring its time.</li>
+<li><strong>method:</strong> <code>ws.send(data)</code> Returns <code>undefined</code>.
+Send <code>data</code> through the connection.
+This method throws an error if the ready state is <code>CONNECTING</code>.</li>
+<li><strong>method:</strong> <code>ws.sendPing(data)</code> Returns <code>undefined</code>.
+Send <code>ping</code> through the connection.
+This method throws an error if the ready state is <code>CONNECTING</code>.</li>
+<li><strong>method:</strong> <code>ws.sendPong(data)</code> Returns <code>undefined</code>.
+Send <code>pong</code> through the connection.
+This method throws an error if the ready state is <code>CONNECTING</code>.</li>
+</ul>
+<h3 id="events-of-websocket">Events of WebSocket</h3>
+<ul>
+<li><p><strong>event:</strong> <code>'close'</code> Fired when a connection with a <code>WebSocket</code> is closed.
+Also available via the <code>onclose</code> property</p>
+<p>Event type <code>object</code>.</p>
+<p>Event properties:</p>
+<ul>
+<li><code>code</code> Returns an unsigned short containing
+the close <a href="https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent/code">code</a>
+sent by the server.</li>
+<li><code>reason</code> Returns a string indicating the reason the server closed the connection.
+This is specific to the particular server and sub-protocol.</li>
+<li><code>wasClean</code> Returns a boolean value that Indicates whether or not the connection was cleanly closed.</li>
+</ul>
+</li>
+<li><p><strong>event:</strong> <code>'error'</code> Fired when a connection with a <code>WebSocket</code> has been closed because of an error,
+such as when some data couldn't be sent.
+Also available via the <code>ws.onerror</code> property.</p>
+<p>Event type <code>Error</code>.</p>
+</li>
+<li><p><strong>event:</strong> <code>'message'</code> Fired when data is received through a <code>WebSocket</code>.
+Also available via the <code>onmessage</code> property.</p>
+<p>Event type <code>object</code>.</p>
+<p>Event properties:</p>
+<ul>
+<li><code>data</code> The data sent by the message emitter.</li>
+<li><code>isBinary</code> Specifies whether the message is binary or not.</li>
+</ul>
+</li>
+<li><p><strong>event:</strong> <code>'open'</code> Fired when a connection with a <code>WebSocket</code> is opened.
+Also available via the <code>onopen</code> property.</p>
+<p>Event type <code>undefined</code>.</p>
+</li>
+<li><p><strong>event:</strong> <code>'ping'</code> Fired when ping is received through a <code>WebSocket</code>.
+Also available via the <code>onping</code> property.</p>
+<p>Event type <code>object</code>.</p>
+<p>Event properties:</p>
+<ul>
+<li><code>data</code> The data sent by the message emitter.</li>
+</ul>
+</li>
+<li><p><strong>event:</strong> <code>'pong'</code> Fired when pong is received through a <code>WebSocket</code>.
+Also available via the <code>onpong</code> property.</p>
+<p>Event type <code>object</code>.</p>
+<p>Event properties:</p>
+<ul>
+<li><code>data</code> The data sent by the message emitter.</li>
+<li><code>latency_ms</code> Latency describes the amount of delay on a network or Internet connection.</li>
+</ul>
+</li>
+</ul>
+<h2 id="ready-state-constants">Ready state constants</h2>
+<table>
+<thead>
+<tr>
+<th>Constant</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CONNECTING</td>
+<td>0</td>
+<td>The connection is not yet open.</td>
+</tr>
+<tr>
+<td>OPEN</td>
+<td>1</td>
+<td>The connection is open and ready to communicate.</td>
+</tr>
+<tr>
+<td>CLOSING</td>
+<td>2</td>
+<td>The connection is in the process of closing.</td>
+</tr>
+<tr>
+<td>CLOSED</td>
+<td>3</td>
+<td>The connection is closed.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="extension">Extension</h2>
+<p>Extending the interface for <code>permessage-deflate</code> and <code>permessage-masking</code></p>
+<h3 id="constructors-of-extension">Constructors of Extension</h3>
+<p><strong>constructor:</strong> <code>Extension([options])</code> Returns a newly created Extension object.</p>
+<h3 id="instance-methods-of-extension">Instance methods of Extension</h3>
+<ul>
+<li><p><strong>method:</strong> <code>ext.init(ws)</code> Returns <code>undefined</code>.
+Initialisation.</p>
+<p>method parameters:</p>
+<ul>
+<li><strong>parameter:</strong> <code>ws</code> Type <a href="#websocket"><code>WebSocket</code></a>.</li>
+</ul>
+</li>
+<li><p><strong>method:</strong> <code>ext.close(callback)</code> Returns <code>undefined</code>. Close extension.</p>
+<p>method parameters:</p>
+<ul>
+<li><strong>parameter:</strong> <code>callback</code> Type <code>(error)=&gt;void</code>.</li>
+</ul>
+</li>
+<li><p><strong>method:</strong> <code>ext.mask(frame, callback)</code> Returns <code>undefined</code>. Mask frame.</p>
+<p>method parameters:</p>
+<ul>
+<li><strong>parameter:</strong> <code>frame</code> Type <a href="#frame"><code>Frame</code></a>.</li>
+<li><strong>parameter:</strong> <code>callback</code> Type <code>(error, </code><a href="#frame"><code>Frame</code></a><code>)=&gt;void</code>. Returns <code>undefined</code>.</li>
+</ul>
+</li>
+<li><p><strong>method:</strong> <code>ext.unmask(frame, callback)</code> Returns <code>undefined</code>. Unmask frame.</p>
+<p>method parameters:</p>
+<ul>
+<li><strong>parameter:</strong> <code>frame</code> Type <a href="#frame"><code>Frame</code></a>.</li>
+<li><strong>parameter:</strong> <code>callback</code> Type <code>(error, </code><a href="#frame"><code>Frame</code></a><code>)=&gt;void</code>. Returns <code>undefined</code>.</li>
+</ul>
+</li>
+<li><p><strong>method:</strong> <code>ext.generateOffer(callback)</code> Returns <code>undefined</code>. Client generate offer.</p>
+<p>method parameters:</p>
+<ul>
+<li><strong>parameter:</strong> <code>callback</code> Type <code>(error, extHeaderValue:string)=&gt;void</code>. Returns <code>undefined</code>.</li>
+</ul>
+</li>
+<li><p><strong>method:</strong> <code>ext.activate(headers, callback)</code> Returns <code>undefined</code>. Client activate.</p>
+<p>method parameters:</p>
+<ul>
+<li><strong>parameter:</strong> <code>headers</code> Type <code>[string]</code>.</li>
+<li><strong>parameter:</strong> <code>callback</code> Type <code>(error, isActivate:boolean)=&gt;void</code>. Returns <code>undefined</code>.</li>
+</ul>
+</li>
+<li><p><strong>method:</strong> <code>ext.generateResponse(headers, callback)</code> Returns <code>undefined</code>. Server generate response.</p>
+<p>method parameters:</p>
+<ul>
+<li><strong>parameter:</strong> <code>headers</code> Type <code>[string]</code>.</li>
+<li><strong>parameter:</strong> <code>callback</code> Type <code>(error, extHeaderValue:string)=&gt;void</code>. Returns <code>undefined</code>.</li>
+</ul>
+</li>
+<li><p><strong>method:</strong> <code>ext.processIncomingMessage(frame, callback)</code> Returns <code>undefined</code>.</p>
+<p>method parameters:</p>
+<ul>
+<li><strong>parameter:</strong> <code>frame</code> Type <a href="#frame"><code>Frame</code></a>.</li>
+<li><strong>parameter:</strong> <code>callback</code> Type <code>(error, </code><a href="#frame"><code>Frame</code></a><code>)=&gt;void</code>. Returns <code>undefined</code>.</li>
+</ul>
+</li>
+<li><p><strong>method:</strong> <code>ext.processOutgoingMessage(frame, callback)</code> Returns <code>undefined</code>.</p>
+<p>method parameters:</p>
+<ul>
+<li><strong>parameter:</strong> <code>frame</code> Type <a href="#frame"><code>Frame</code></a>.</li>
+<li><strong>parameter:</strong> <code>callback</code> Type <code>(error, </code><a href="#frame"><code>Frame</code></a><code>)=&gt;void</code>. Returns <code>undefined</code>.</li>
+</ul>
+</li>
+<li><p><strong>method:</strong> <code>ext.processIncomingFrame(frame, callback)</code> Returns <code>undefined</code>.</p>
+<p>method parameters:</p>
+<ul>
+<li><strong>parameter:</strong> <code>frame</code> Type <a href="#frame"><code>Frame</code></a>.</li>
+<li><strong>parameter:</strong> <code>callback</code> Type <code>(error, </code><a href="#frame"><code>Frame</code></a><code>)=&gt;void</code>. Returns <code>undefined</code>.</li>
+</ul>
+</li>
+<li><p><strong>method:</strong> <code>ext.processOutgoingFrame(frame, callback)</code> Returns <code>undefined</code>.</p>
+<p>method parameters:</p>
+<ul>
+<li><strong>parameter:</strong> <code>frame</code> Type <a href="#frame"><code>Frame</code></a>.</li>
+<li><strong>parameter:</strong> <code>callback</code> Type <code>(error, </code><a href="#frame"><code>Frame</code></a><code>)=&gt;void</code>. Returns <code>undefined</code>.</li>
+</ul>
+</li>
+</ul>
+<h2 id="frame">Frame</h2>
+<p>The <code>Frame</code> interface represents a WebSocket frame.</p>
+<p>Frame type <code>object</code>.</p>
+<h3 id="instance-properties-of-frame">Instance properties of Frame</h3>
+<ul>
+<li><strong>property:</strong> <code>frame.isFin</code> Value type <code>boolean</code>.</li>
+<li><strong>property:</strong> <code>frame.isRsv1</code> Value type <code>boolean</code>.</li>
+<li><strong>property:</strong> <code>frame.isRsv2</code> Value type <code>boolean</code>.</li>
+<li><strong>property:</strong> <code>frame.isRsv3</code> Value type <code>boolean</code>.</li>
+<li><strong>property:</strong> <code>frame.opcode</code> Value type <code>boolean</code>.</li>
+<li><strong>property:</strong> <code>frame.isMasked</code> Value type <code>boolean</code>.</li>
+<li><strong>property:</strong> <code>frame.payloadLength</code> Value type <code>number</code>.</li>
+<li><strong>property:</strong> <code>frame.maskingKey</code> Value type <code>[]</code>.</li>
+<li><strong>property:</strong> <code>frame.payload</code> Value type <code>Buffer</code>.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous" onload="document.querySelectorAll('#list-headers a').forEach(function(a){a.classList.add('list-group-item','list-group-item-action')})"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+</body>
+</html>

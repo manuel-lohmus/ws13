@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>WebSocket Test</title>
+    <style type="text/css">
+        html, body {
+            font: normal 0.9em arial,helvetica;
+        }
+
+        #log {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #808080;
+            overflow: auto;
+        }
+
+        #msg {
+            width: 400px;
+        }
+    </style>
+    <script type="text/javascript">
+
+        var socket = null,
+            constants = ['CONNECTING', 'OPEN', 'CLOSING', 'CLOSED'];
+
+        function init(wsHost = location.host) {
+
+            if (!wsHost) { return; }
+
+            const host = location.protocol.replace('http', 'ws') + '//' + wsHost;
+
+            try {
+                socket = new WebSocket(host);
+                state();
+
+                socket.onmessage = function (event) {
+
+                    var message = event.data;
+
+                    log(message);
+                };
+                socket.onopen = state;
+                socket.onclose = state;
+                socket.onerror = function (err) {
+
+                    log('WebSocket - [ ERROR ] ' + err);
+                    state();
+                };
+            }
+            catch (err) { log('[ ERROR ] ' + err); }
+
+            $('#msg').focus();
+        }
+
+        function state() {
+
+            setTimeout(function () {
+
+                $('#status').innerHTML = 'WebSocket - ' + (socket === null ? 'CLOSED' : constants[socket.readyState]);
+
+                if (socket && constants[socket.readyState] === "OPEN") {
+
+                    $('#msg').disabled = false;
+                    $('#btnSend').disabled = false;
+                }
+                else {
+
+                    $('#msg').disabled = true;
+                    $('#btnSend').disabled = true;
+                }
+
+            }, 200);
+        }
+        function reconnect(wsHost = location.host) {
+
+            quit();
+            $('#log').innerHTML = '';
+            init(wsHost);
+        }
+        function send() {
+
+            //debugger;
+            var txt = $('#msg');
+            var msg = txt.value;
+            txt.value = '';
+            txt.focus();
+
+            switch (msg) {
+
+                case "":
+                    alert('Message cannot be empty');
+                    return;
+
+                case "clear":
+                    $('#log').innerHTML = "";
+                    return;
+            }
+
+            try { socket.send(msg); }
+            catch (ex) { log(ex); }
+        }
+        function quit() {
+
+            if (socket !== null) {
+
+                socket.close(1000, 'Normal closure');
+                //socket.close();
+                socket = null;
+                state();
+            }
+        }
+
+        //Utilities
+        function $(selectors) { return document.querySelector(selectors); }
+        function log(msg) {
+
+            var log = $('#log'),
+                scrollDown = log.scrollHeight - log.scrollTop - log.clientHeight < 1;
+
+            log.innerHTML += msg
+                .replace(new RegExp(" ", 'g'), "&ensp;")
+                .replace(new RegExp("\t", 'g'), "&emsp;&emsp;&emsp;")
+                .replace(new RegExp("\n", 'g'), "<br/>")
+                + '<br>';
+
+            if (scrollDown)
+                log.scrollTop = log.scrollHeight;
+        }
+        function onkey(event) { if (event.keyCode === 13) { send(); } }
+    </script>
+</head>
+<body onload="init()">
+    <h3>WebSocket Test</h3>
+    <table>
+        <tr><td><span id="status"></span></td></tr>
+        <tr><td><div id="log"></div></td></tr>
+        <tr>
+            <td>
+                <input id="msg" list="commands" type="text" onkeypress="onkey(event)" />
+                <datalist id="commands"></datalist>
+                <button id="btnSend" onclick="send()">Send</button>
+                <button onclick="$('#log').innerHTML=''">Clear</button>
+                <button onclick="quit()">Quit</button>
+                <button onclick="reconnect()">Reconnect</button>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
