@@ -33,7 +33,9 @@
 <div class="col">
 <div class="p-2 markdown-body" data-bs-spy="scroll" data-bs-target="#list-headers" data-bs-offset="0" tabindex="0">
 
-# WebSocket API [version 13]<!--<a href="./README.html" target="_blank"><img border="0" alt="external" src="./external_link_alt.png"></a>-->
+# WebSocket API [version 13] 
+
+This manual is also available in [HTML5](https://manuel-lohmus.github.io/ws13/README.html).
 
 ## Description
 
