@@ -1,4 +1,5 @@
 // Type definitions for ws13 1.0
+// Based on Copilot's work (index.d.ts)
 
 import { IncomingMessage, ClientRequest } from 'http';
 import { Socket } from 'net';

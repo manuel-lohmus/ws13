@@ -35,7 +35,9 @@
 
 # WebSocket API [version 13] 
 
-This manual is also available in [HTML5](https://manuel-lohmus.github.io/ws13/README.html).
+This manual is also available in [HTML5](https://manuel-lohmus.github.io/ws13/README.html). 
+<br>
+This document was created with the help of Copilot
 
 ## Description
 

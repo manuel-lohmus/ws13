@@ -1,14 +1,16 @@
 {
   "name": "ws13",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple and easy-to-use WebSocket protocol implementation.",
   "license": "MIT",
   "author": "Manuel Lõhmus <manuel@hauss.ee>",
   "keywords": [
     "ws13",
     "ws",
+    "websocket",
     "WebSocket",
     "WebSockets",
+    "realtime",
     "real-time"
   ],
   "browser": "browser.js",
@@ -40,6 +42,6 @@
   "bugs": "https://github.com/manuel-lohmus/ws13/issues",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/manuel-lohmus/victronenergy-modbustcp-api.git"
+    "url": "git+https://github.com/manuel-lohmus/ws13.git"
   }
 }
