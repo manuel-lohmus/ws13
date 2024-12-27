@@ -107,6 +107,11 @@ These use cases benefit from WebSocket's ability to maintain a persistent connec
 <p>This project is licensed under the MIT License.</p>
 <p><a href="https://www.paypal.com/donate?hosted_button_id=4DAKNYHBD9MNC"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="Donate" /></a></p>
 <h2 id="usage">Usage</h2>
+<p><code>ws13</code> support ESM and CJS module format in Node.js</p>
+<pre><code class="language-js">import WebSocket from 'ws13';
+// or
+const WebSocket = require('ws13');
+</code></pre>
 <p><strong>Example of use on a server</strong></p>
 <pre><code class="language-js">const { createServer } = require('node:http');
 const WebSocket = require('ws13');
@@ -115,18 +120,13 @@ const server = createServer();
 let wsList = [];
 
 server.on('upgrade', function (request) {
+
     // upgrade WebSocket
-    const websocket = new WebSocket({
-        // isDebug: true,
-        request,
-        // protocol: '',
-        // origin: 'http://localhost',
-        // heartbeatInterval_ms: 30000, /* in milliseconds */
-        // extension: null, /* Default `permessage-deflate`. */
-    });
+    const websocket = new WebSocket({ request });
 
     // has WebSocket, the handshake is done
     if (websocket) {
+
         // inserts a WebSocket from the list
         wsList.push(websocket);
 
@@ -161,11 +161,11 @@ then do the following.</p>
 const WebSocket = require('ws13');
 
 const ws = new WebSocket({
-    // isDebug: true,
-    request: http.request({ hostname: '127.0.0.1', port: 80, path: '/test' }),
-    // protocol: '',
-    // origin: 'http://127.0.0.1',
-    // extension: null, /* Default `permessage-deflate`. */
+    request: http.request({ 
+        hostname: '127.0.0.1', 
+        port: 80, 
+        path: '/test'
+    })
 })
     .on('error', console.error)
     .on('open', function () {
@@ -203,6 +203,7 @@ const ws = new WebSocket({
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
+<p>Complete example of use on the server and client side can be found in the <a href="https://github.com/manuel-lohmus/ws13/tree/master/examples/Server">examples/Server</a> directory.</p>
 <p><strong>Secure communication</strong></p>
 <p>To use secure communication, you need to use the <code>https</code> module and the <code>wss</code> protocol.</p>
 <p><strong>Example of use on a server</strong></p>
@@ -210,6 +211,7 @@ const ws = new WebSocket({
 const WebSocket = require('ws13');
 
 const server = createServer({
+    // path to the key and certificate
     key: fs.readFileSync('server-key.pem'),
     cert: fs.readFileSync('server-cert.pem')
 });
@@ -217,19 +219,16 @@ const server = createServer({
 let wsList = [];
 
 server.on('upgrade', function (request) {
+
     // upgrade WebSocket
-    const websocket = new WebSocket({
-        // isDebug: true,
-        request,
-        // protocol: '',
-        // origin: 'https://localhost',
-        // heartbeatInterval_ms: 30000, /* in milliseconds */
-        // extension: null, /* Default `permessage-deflate`. */
-    });
+    const websocket = new WebSocket({ request });
+
     // has WebSocket, the handshake is done
     if (websocket) {
+
         // inserts a WebSocket from the list
         wsList.push(websocket);
+
         // add listeners
         websocket
             .on('error', console.error)
@@ -245,6 +244,7 @@ server.on('upgrade', function (request) {
                 wsList = wsList.filter(ws =&gt; ws !== websocket);
             });
     } else {
+
         // handshake not accepted
         request.destroy();
     }
@@ -506,9 +506,44 @@ Initialisation.</p>
 </div>
 
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous" onload="document.querySelectorAll('#list-headers a').forEach(function(a){a.classList.add('list-group-item','list-group-item-action')})"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script>
+        (function () {
+
+            'use strict';
+
+            var isIE = !!document.documentMode; // Detect IE
+
+            if (!isIE) {
+
+                var link, script;
+
+                // bootstrap for styling (https://getbootstrap.com/)
+                link = document.createElement('link');
+                link.href = 'https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css';
+                link.rel = 'stylesheet';
+                link.crossOrigin = 'anonymous';
+                document.head.appendChild(link);
+                script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js';
+                script.crossOrigin = 'anonymous';
+                document.head.appendChild(script);
+
+                // prism syntax highlighter for code blocks (https://prismjs.com/)
+                link = document.createElement('link');
+                link.href = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css';
+                link.rel = 'stylesheet';
+                link.crossOrigin = 'anonymous';
+                document.head.appendChild(link);
+                script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js';
+                script.crossOrigin = 'anonymous';
+                document.head.appendChild(script);
+
+                // list-group style for headers
+                document.querySelectorAll('#list-headers a')
+                    .forEach(function (a) { a.classList.add('list-group-item', 'list-group-item-action') });
+            }
+        })();
+    </script>
 </body>
 </html>

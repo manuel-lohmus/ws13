@@ -109,6 +109,14 @@ This project is licensed under the MIT License.
 
 ## Usage
 
+`ws13` support ESM and CJS module format in Node.js
+
+```js
+import WebSocket from 'ws13';
+// or
+const WebSocket = require('ws13');
+```
+
 **Example of use on a server**
 
 ```js
@@ -119,18 +127,13 @@ const server = createServer();
 let wsList = [];
 
 server.on('upgrade', function (request) {
+
     // upgrade WebSocket
-    const websocket = new WebSocket({
-        // isDebug: true,
-        request,
-        // protocol: '',
-        // origin: 'http://localhost',
-        // heartbeatInterval_ms: 30000, /* in milliseconds */
-        // extension: null, /* Default `permessage-deflate`. */
-    });
+    const websocket = new WebSocket({ request });
 
     // has WebSocket, the handshake is done
     if (websocket) {
+
         // inserts a WebSocket from the list
         wsList.push(websocket);
 
@@ -170,11 +173,11 @@ const http = require('node:http');
 const WebSocket = require('ws13');
 
 const ws = new WebSocket({
-    // isDebug: true,
-    request: http.request({ hostname: '127.0.0.1', port: 80, path: '/test' }),
-    // protocol: '',
-    // origin: 'http://127.0.0.1',
-    // extension: null, /* Default `permessage-deflate`. */
+    request: http.request({ 
+        hostname: '127.0.0.1', 
+        port: 80, 
+        path: '/test'
+    })
 })
     .on('error', console.error)
     .on('open', function () {
@@ -216,6 +219,8 @@ const ws = new WebSocket({
 </html>
 ```
 
+Complete example of use on the server and client side can be found in the [examples/Server](https://github.com/manuel-lohmus/ws13/tree/master/examples/Server) directory.
+
 **Secure communication**
 
 To use secure communication, you need to use the `https` module and the `wss` protocol.
@@ -226,6 +231,7 @@ const { createServer } = require('node:https');
 const WebSocket = require('ws13');
 
 const server = createServer({
+    // path to the key and certificate
     key: fs.readFileSync('server-key.pem'),
     cert: fs.readFileSync('server-cert.pem')
 });
@@ -233,19 +239,16 @@ const server = createServer({
 let wsList = [];
 
 server.on('upgrade', function (request) {
+
     // upgrade WebSocket
-    const websocket = new WebSocket({
-        // isDebug: true,
-        request,
-        // protocol: '',
-        // origin: 'https://localhost',
-        // heartbeatInterval_ms: 30000, /* in milliseconds */
-        // extension: null, /* Default `permessage-deflate`. */
-    });
+    const websocket = new WebSocket({ request });
+
     // has WebSocket, the handshake is done
     if (websocket) {
+
         // inserts a WebSocket from the list
         wsList.push(websocket);
+
         // add listeners
         websocket
             .on('error', console.error)
@@ -261,6 +264,7 @@ server.on('upgrade', function (request) {
                 wsList = wsList.filter(ws => ws !== websocket);
             });
     } else {
+
         // handshake not accepted
         request.destroy();
     }
