@@ -19,22 +19,21 @@ var { Buffer } = require('node:buffer'),
  * @property {string} origin String. Default empty string.
  * @property {number} heartbeatInterval_ms The interval after which ping pong takes place. Default on the client side 0ms and on the server side 30000ms.
  * @property {Extension|null} extension The extensions selected by the server. Default 'permessage-deflate'
- * @property {string} url The URL to which to connect. Default empty string.
  */
 
 /**
  * @typedef Extension for WebSocket
- * @property {(ws:Socket)=>void} init initialisation
- * @property {(callback:(error:Error)=>void)=>void} close
- * @property {(frame:Frame, callback:(error:Error, frame:Frame)=>void)=>void} mask
- * @property {(frame:Frame, callback:(error:Error, frame:Frame)=>void)=>void} unmask
- * @property {callback:(error:Error, headers:[string])=>void} generateOffer Client generate offer
- * @property {(headers:[string], callback:(error:Error, isActivate:boolean)=>void)=>void} activate Client activate
- * @property {(headers:[string], callback:(error:Error, extHeader:string)=>void)=>void} generateResponse Server generate response
- * @property {(frame:Frame, callback:(error:Error, frame:Frame)=>void)=>void} processIncomingMessage
- * @property {(frame:Frame, callback:(error:Error, frame:Frame)=>void)=>void} processOutgoingMessage
- * @property {(frame:Frame, callback:(error:Error, frame:Frame)=>void)=>void} processIncomingFrame
- * @property {(frame:Frame, callback:(error:Error, frame:Frame)=>void)=>void} processOutgoingFrame
+ * @method {(ws:WebSocket)=>void} init
+ * @method {(headers:object, cb:(err:Error, isActivate:boolean)=>void)=>void} activate
+ * @method {(cb:(err:Error, extensionHeaderValue:string)=>void)=>void} generateOffer
+ * @method {(headers:object, cb:(err:Error, extensionHeaderValue:string)=>void)=>void} generateResponse
+ * @method {(frame:Frame, cb:(err:Error, frame:Frame)=>void)=>void} mask
+ * @method {(frame:Frame, cb:(err:Error, frame:Frame)=>void)=>void} unmask
+ * @method {(frame:Frame, cb:(err:Error, frame:Frame)=>void)=>void} processOutgoingFrame
+ * @method {(frame:Frame, cb:(err:Error, frame:Frame)=>void)=>void} processIncomingFrame
+ * @method {(message:Message, cb:(err:Error, message:Message)=>void)=>void} processOutgoingMessage
+ * @method {(message:Message, cb:(err:Error, message:Message)=>void)=>void} processIncomingMessage
+ * @method {(cb:(err:Error)=>void)=>void} close
  */
 
 /**
@@ -65,6 +64,10 @@ var { Buffer } = require('node:buffer'),
  * @property {string} protocol The protocol accepted by the server, or an empty string if the client did not specify protocols in the WebSocket constructor.
  * @property {0|1|2|3} readyState The connection state.
  * @property {string} protocol 
+ * @property {string} path
+ * @property {string} url
+ * @property {string} origin
+ * @property {number} heartbeatInterval_ms
  * @property {string} ip IP address
  * @property {number} port
  * @property {number} latency_ms Latency describes the amount of delay on a network or Internet connection. Low latency implies that there are no or almost no delays. High latency implies that there are many delays. One of the main aims of improving performance is to reduce latency.
@@ -133,6 +136,7 @@ function WebSocket({
         // ATTRIBUTES
         protocol: { value: protocol, writable: true, configurable: false, enumerable: false },
         path: { value: request?.url || request.path, writable: false, configurable: false, enumerable: false },
+        url: { value: request?.url || request.path, writable: false, configurable: false, enumerable: false },
         origin: { value: origin, writable: true, configurable: false, enumerable: false },
         heartbeatInterval_ms: {
             get() { return heartbeatInterval_ms; },
