@@ -276,7 +276,8 @@ function WebSocket({
             if (headers['connection'].toLowerCase() !== 'upgrade') { return 'Invalid `Connection` header'; }
             if (headers['upgrade'].toLowerCase() !== 'websocket') { return 'Invalid `Upgrade` header'; }
             if (headers['sec-websocket-accept'] !== accept) { return 'Invalid `Sec-WebSocket-Accept` header'; }
-            if (protocol && headers['sec-websocket-protocol'] !== protocol) { return 'Server sent a subprotocol but none was requested'; }
+            //if (protocol && headers['sec-websocket-protocol'] !== protocol) { return 'Server sent a subprotocol but none was requested'; }
+            if (protocol && !protocol.includes(headers['sec-websocket-protocol'])) { return 'Server sent a subprotocol but none was requested'; }
             //headers['sec-websocket-extensions']
 
             return null;
