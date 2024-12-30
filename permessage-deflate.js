@@ -15,25 +15,31 @@ var zlib = require('node:zlib');
  */
 
 /**
- * @typedef WebSocket
- * @property {0} CONNECTING Waiting opening handshake.
- * @property {1} OPEN Opening handshake succeeded. The client and server may message each other.
- * @property {2} CLOSING Waiting closing handshake. Either ws.close() was called or the server sent a Close frame.
- * @property {3} CLOSED The underlying TCP connection is closed.
- * @property {(event)=>void} onopen Fired when a connection with a WebSocket is opened. Also available via the onopen property.
- * @property {(event)=>void} onmessage Fired when data is received through a WebSocket. Also available via the onmessage property.
- * @property {(event)=>void} onping
- * @property {(event)=>void} onpong
- * @property {(event)=>void} onclose Fired when a connection with a WebSocket is closed. Also available via the onclose property
- * @property {(event)=>void} onerror Fired when data is received through a WebSocket. Also available via the onmessage property.
- * @property {string} protocol The protocol accepted by the server, or an empty string if the client did not specify protocols in the WebSocket constructor.
- * @property {0|1|2|3} readyState The connection state. It is one of the constants below.
- * @property {string} ip IP address
- * @property {number} port
- * @property {number} latency_ms Latency describes the amount of delay on a network or Internet connection. Low latency implies that there are no or almost no delays. High latency implies that there are many delays. One of the main aims of improving performance is to reduce latency.
- * @property {(data)=>void} send Enqueues data to be transmitted.
- * @property {()=>void} close Closes the connection.
- * @property {(callback:(latency_ms:number)=>void)=>void} heartbeat
+ * @typedef Extension for WebSocket
+ * @property {(ws:WebSocket)=>void} init
+ * @property {(headers:object, cb:(err:Error, isActivate:boolean)=>void)=>void} activate
+ * @property {(cb:(err:Error, extensionHeaderValue:string)=>void)=>void} generateOffer
+ * @property {(headers:object, cb:(err:Error, extensionHeaderValue:string)=>void)=>void} generateResponse
+ * @property {(frame:Frame, cb:(err:Error, frame:Frame)=>void)=>void} mask
+ * @property {(frame:Frame, cb:(err:Error, frame:Frame)=>void)=>void} unmask
+ * @property {(frame:Frame, cb:(err:Error, frame:Frame)=>void)=>void} processOutgoingFrame
+ * @property {(frame:Frame, cb:(err:Error, frame:Frame)=>void)=>void} processIncomingFrame
+ * @property {(message:Message, cb:(err:Error, message:Message)=>void)=>void} processOutgoingMessage
+ * @property {(message:Message, cb:(err:Error, message:Message)=>void)=>void} processIncomingMessage
+ * @property {(cb:(err:Error)=>void)=>void} close
+ */
+
+/**
+ * @typedef Frame for WebSocket
+ * @property {boolean} isFin
+ * @property {boolean} isRsv1
+ * @property {boolean} isRsv2
+ * @property {boolean} isRsv3
+ * @property {boolean} opcode
+ * @property {boolean} isMasked
+ * @property {number} payloadLength
+ * @property {[]|null} maskingKey
+ * @property {Buffer|null} payload
  */
 
 /**
@@ -52,14 +58,17 @@ var zlib = require('node:zlib');
 /**
  * Implements the permessage-deflate WebSocket protocol extension
  * @param {Options} options
+ * @returns {Extension}
  */
-function PermessageDeflate({
+function createPermessageDeflate({
     level = levels.Z_DEFAULT_COMPRESSION,
     memLevel = memLevels.Z_DEFAULT_MEMLEVEL,
     strategy = strategies.Z_DEFAULT_STRATEGY,
     maxWindowBits = windowBits.Z_DEFAULT_WINDOWBITS,
     noContextTakeover = false
 } = {}) {
+
+    if (createPermessageDeflate === this.constructor) { throw new Error('This function must be used without the `new` keyword.'); }
 
     var isRoleOfServer = true,
         client_no_context_takeover = false,
@@ -378,9 +387,9 @@ var windowBits = {
 }
 
 
-PermessageDeflate.levels = levels;
-PermessageDeflate.memLevels = memLevels;
-PermessageDeflate.strategies = strategies;
-PermessageDeflate.windowBits = windowBits;
+createPermessageDeflate.levels = levels;
+createPermessageDeflate.memLevels = memLevels;
+createPermessageDeflate.strategies = strategies;
+createPermessageDeflate.windowBits = windowBits;
 
-module.exports = PermessageDeflate;
+module.exports = createPermessageDeflate;

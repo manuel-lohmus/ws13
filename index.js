@@ -7,7 +7,7 @@ var { Buffer } = require('node:buffer'),
     EventEmitter = require('node:events'),
     { Socket } = require('node:net'),
     http = require('node:http'),
-    PermessageDeflate = require('./permessage-deflate');
+    createPermessageDeflate = require('./permessage-deflate');
 
 /**
  * @typedef Options for WebSocket
@@ -23,17 +23,17 @@ var { Buffer } = require('node:buffer'),
 
 /**
  * @typedef Extension for WebSocket
- * @method {(ws:WebSocket)=>void} init
- * @method {(headers:object, cb:(err:Error, isActivate:boolean)=>void)=>void} activate
- * @method {(cb:(err:Error, extensionHeaderValue:string)=>void)=>void} generateOffer
- * @method {(headers:object, cb:(err:Error, extensionHeaderValue:string)=>void)=>void} generateResponse
- * @method {(frame:Frame, cb:(err:Error, frame:Frame)=>void)=>void} mask
- * @method {(frame:Frame, cb:(err:Error, frame:Frame)=>void)=>void} unmask
- * @method {(frame:Frame, cb:(err:Error, frame:Frame)=>void)=>void} processOutgoingFrame
- * @method {(frame:Frame, cb:(err:Error, frame:Frame)=>void)=>void} processIncomingFrame
- * @method {(message:Message, cb:(err:Error, message:Message)=>void)=>void} processOutgoingMessage
- * @method {(message:Message, cb:(err:Error, message:Message)=>void)=>void} processIncomingMessage
- * @method {(cb:(err:Error)=>void)=>void} close
+ * @property {(ws:WebSocket)=>void} init
+ * @property {(headers:object, cb:(err:Error, isActivate:boolean)=>void)=>void} activate
+ * @property {(cb:(err:Error, extensionHeaderValue:string)=>void)=>void} generateOffer
+ * @property {(headers:object, cb:(err:Error, extensionHeaderValue:string)=>void)=>void} generateResponse
+ * @property {(frame:Frame, cb:(err:Error, frame:Frame)=>void)=>void} mask
+ * @property {(frame:Frame, cb:(err:Error, frame:Frame)=>void)=>void} unmask
+ * @property {(frame:Frame, cb:(err:Error, frame:Frame)=>void)=>void} processOutgoingFrame
+ * @property {(frame:Frame, cb:(err:Error, frame:Frame)=>void)=>void} processIncomingFrame
+ * @property {(message:Message, cb:(err:Error, message:Message)=>void)=>void} processOutgoingMessage
+ * @property {(message:Message, cb:(err:Error, message:Message)=>void)=>void} processIncomingMessage
+ * @property {(cb:(err:Error)=>void)=>void} close
  */
 
 /**
@@ -63,7 +63,6 @@ var { Buffer } = require('node:buffer'),
  * @property {(event)=>void} onerror Fired when data is received through a WebSocket. Also available via the onmessage property.
  * @property {string} protocol The protocol accepted by the server, or an empty string if the client did not specify protocols in the WebSocket constructor.
  * @property {0|1|2|3} readyState The connection state.
- * @property {string} protocol 
  * @property {string} path
  * @property {string} url
  * @property {string} origin
@@ -83,7 +82,7 @@ var { Buffer } = require('node:buffer'),
  * @param {Options} options
  * @returns {WebSocket}
  */
-function WebSocket({
+function createWebSocket({
     isDebug = false, // If set to true, more info in console. Default false
     request, // Reference link: https://nodejs.org/docs/latest/api/http.html#class-httpincomingmessage or https://nodejs.org/docs/latest/api/http.html#class-httpclientrequest
     headers, // Key-value pairs of header names and values. Header names are lower-cased.
@@ -91,8 +90,10 @@ function WebSocket({
     protocol = '', // The sub-protocol selected by the server. Default empty string.
     origin = '', // String. Default empty string.
     heartbeatInterval_ms = 0, // The interval after which ping pong takes place. Default on the client side 0ms and on the server side 30000ms.
-    extension = PermessageDeflate() // The extensions selected by the server. Default 'permessage-deflate'
+    extension = createPermessageDeflate() // The extensions selected by the server. Default 'permessage-deflate'
 } = {}) {
+
+    if (createWebSocket === this.constructor) { throw new Error('This function must be used without the `new` keyword.'); }
 
     if (!isRoleOfServer() && !(request instanceof http.ClientRequest)) { return null; }
 
@@ -188,7 +189,7 @@ function WebSocket({
         request.setHeader('Upgrade', 'WebSocket');
         request.setHeader('Sec-WebSocket-Key', key);
         request.setHeader('Sec-WebSocket-Version', '13');
-        if (protocol) { request.setHeader('Sec-WebSocket-Protocol', protocol); }
+        if (protocol) { request.setHeader('Sec-WebSocket-Protocol', protocol?.join?.(", ") || protocol); }
         if (origin) { request.setHeader('Origin', origin); }
 
         socket = request.socket;
@@ -276,7 +277,6 @@ function WebSocket({
             if (headers['connection'].toLowerCase() !== 'upgrade') { return 'Invalid `Connection` header'; }
             if (headers['upgrade'].toLowerCase() !== 'websocket') { return 'Invalid `Upgrade` header'; }
             if (headers['sec-websocket-accept'] !== accept) { return 'Invalid `Sec-WebSocket-Accept` header'; }
-            //if (protocol && headers['sec-websocket-protocol'] !== protocol) { return 'Server sent a subprotocol but none was requested'; }
             if (protocol && !protocol.includes(headers['sec-websocket-protocol'])) { return 'Server sent a subprotocol but none was requested'; }
             //headers['sec-websocket-extensions']
 
@@ -297,8 +297,22 @@ function WebSocket({
         if (!headers && request?.headers) { headers = request.headers; }
         if (!socket
             || headers?.["sec-websocket-version"] !== '13'
-            || !headers?.["sec-websocket-key"]
-            || protocol && headers?.["sec-websocket-protocol"] !== protocol) { return false; }
+            || !headers?.["sec-websocket-key"]) { return false; }
+        // TODO > protocol accept > Done
+        if (protocol && headers && headers?.["sec-websocket-protocol"] !== protocol) {
+
+            var offerProtocols = headers?.["sec-websocket-protocol"].split(',')
+                .map(entry => (entry + '').trim().toLowerCase()),
+                supportedProtocols = Array.isArray(protocol)
+                    ? protocol
+                    : (protocol + '').split(',')
+                        .map(entry => (entry + '').trim().toLowerCase()),
+                selected = offerProtocols.find(entry => supportedProtocols.includes(entry)) || '';
+
+            if (!selected && protocol) { return false; }
+
+            protocol = selected;
+        }
         if (origin && request?.headers?.origin !== origin) {
 
             if (origin.indexOf(request?.headers?.host) === -1) {
@@ -1175,8 +1189,8 @@ function WebSocket({
 }
 
 
-WebSocket.CONNECTING = 0;
-WebSocket.OPEN = 1;
-WebSocket.CLOSING = 2;
-WebSocket.CLOSED = 3;
-module.exports = WebSocket;
+createWebSocket.CONNECTING = 0;
+createWebSocket.OPEN = 1;
+createWebSocket.CLOSING = 2;
+createWebSocket.CLOSED = 3;
+module.exports = createWebSocket;

@@ -19,7 +19,9 @@
 /**
  * Implements the fast-permessage-masking WebSocket protocol extension
  */
-function Masking() {
+function createMasking() {
+
+    if (createMasking === this.constructor) { throw new Error('This function must be used without the `new` keyword.'); }
 
     return {
 
@@ -63,4 +65,4 @@ function Masking() {
     };
 }
 
-module.exports = Masking;
+module.exports = createMasking;

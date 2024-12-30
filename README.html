@@ -22,7 +22,7 @@
 </li>
 <li><a href="#websocket"><strong>WebSocket</strong> - interface</a>
 <ul>
-<li><a href="#constructors-of-websocket">Constructors</a></li>
+<li><a href="#create-of-websocket">Create new instance</a></li>
 <li><a href="#static-properties-of-websocket">Static properties</a></li>
 <li><a href="#instance-properties-of-websocket">Instance properties</a></li>
 <li><a href="#instance-methods-of-websocket">Instance methods</a></li>
@@ -32,7 +32,7 @@
 <li><a href="#ready-state-constants"><strong>Ready state constants</strong></a></li>
 <li><a href="#extension"><strong>Extension</strong> - interface</a>
 <ul>
-<li><a href="#constructors-of-extension">Constructors</a></li>
+<li><a href="#create-of-extension">Create new instance</a></li>
 <li><a href="#instance-methods-of-extension">Instance methods</a></li>
 </ul>
 </li>
@@ -108,13 +108,13 @@ These use cases benefit from WebSocket's ability to maintain a persistent connec
 <p><a href="https://www.paypal.com/donate?hosted_button_id=4DAKNYHBD9MNC"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="Donate" /></a></p>
 <h2 id="usage">Usage</h2>
 <p><code>ws13</code> support ESM and CJS module format in Node.js</p>
-<pre><code class="language-js">import WebSocket from 'ws13';
+<pre><code class="language-js">import createWebSocket from 'ws13';
 // or
-const WebSocket = require('ws13');
+const createWebSocket = require('ws13');
 </code></pre>
 <p><strong>Example of use on a server</strong></p>
 <pre><code class="language-js">const { createServer } = require('node:http');
-const WebSocket = require('ws13');
+const createWebSocket = require('ws13');
 
 const server = createServer();
 let wsList = [];
@@ -122,7 +122,7 @@ let wsList = [];
 server.on('upgrade', function (request) {
 
     // upgrade WebSocket
-    const websocket = new WebSocket({ request });
+    const websocket = createWebSocket({ request });
 
     // has WebSocket, the handshake is done
     if (websocket) {
@@ -158,12 +158,12 @@ should be preferred, which should provide better results.</p>
 <p>If it is important that the same code runs on the client and server side,
 then do the following.</p>
 <pre><code class="language-js">const http = require('node:http');
-const WebSocket = require('ws13');
+const createWebSocket = require('ws13');
 
-const ws = new WebSocket({
-    request: http.request({ 
-        hostname: '127.0.0.1', 
-        port: 80, 
+const ws = createWebSocket({
+    request: http.request({
+        hostname: '127.0.0.1',
+        port: 80,
         path: '/test'
     })
 })
@@ -206,9 +206,9 @@ const ws = new WebSocket({
 <p>Complete example of use on the server and client side can be found in the <a href="https://github.com/manuel-lohmus/ws13/tree/master/examples/Server">examples/Server</a> directory.</p>
 <p><strong>Secure communication</strong></p>
 <p>To use secure communication, you need to use the <code>https</code> module and the <code>wss</code> protocol.</p>
-<p><strong>Example of use on a server</strong></p>
+<p><strong>Example of use on a <code>https</code> server</strong></p>
 <pre><code class="language-js">const { createServer } = require('node:https');
-const WebSocket = require('ws13');
+const createWebSocket = require('ws13');
 
 const server = createServer({
     // path to the key and certificate
@@ -221,7 +221,7 @@ let wsList = [];
 server.on('upgrade', function (request) {
 
     // upgrade WebSocket
-    const websocket = new WebSocket({ request });
+    const websocket = createWebSocket({ request });
 
     // has WebSocket, the handshake is done
     if (websocket) {
@@ -252,10 +252,10 @@ server.on('upgrade', function (request) {
 </code></pre>
 <h2 id="websocket">WebSocket</h2>
 <p>The <code>WebSocket</code> interface is the main interface for the WebSocket API.</p>
-<p>It extends the <a href="https://nodejs.org/docs/latest/api/events.html"><code>EventEmitter</code></a>.</p>
-<h3 id="constructors-of-websocket">Constructors of WebSocket</h3>
-<p><strong>constructor:</strong> <code>WebSocket(options)</code> Returns a newly created WebSocket object.</p>
-<p>constructor parameters:</p>
+<p>It base the <a href="https://nodejs.org/docs/latest/api/events.html"><code>EventEmitter</code></a>.</p>
+<h3 id="create-of-websocket">Create of WebSocket</h3>
+<p><strong>create new instance:</strong> <code>createWebSocket(options)</code> Returns a newly created WebSocket object.</p>
+<p>method parameters:</p>
 <ul>
 <li><strong>parameter:</strong> <code>options</code> Type <code>object</code>.
 <ul>
@@ -296,6 +296,7 @@ Returns the name of the <a href="https://developer.mozilla.org/en-US/docs/Web/AP
 the server selected; this will be one of the strings specified in the protocols
 parameter when creating the WebSocket object, or the empty string if no connection is established.</li>
 <li><strong>property:</strong> <code>ws.path</code> Value type <code>string</code>.</li>
+<li><strong>property:</strong> <code>ws.url</code> Value type <code>string</code>.</li>
 <li><strong>property:</strong> <code>ws.origin</code> Value type <code>string</code>.</li>
 <li><strong>property:</strong> <code>ws.heartbeatInterval_ms</code> Value type <code>number</code>.</li>
 <li><strong>property:</strong> <code>ws.ip</code> Value type <code>string</code>. IP address</li>
@@ -406,8 +407,8 @@ Also available via the <code>onpong</code> property.</p>
 </table>
 <h2 id="extension">Extension</h2>
 <p>Extending the interface for <code>permessage-deflate</code> and <code>permessage-masking</code></p>
-<h3 id="constructors-of-extension">Constructors of Extension</h3>
-<p><strong>constructor:</strong> <code>Extension([options])</code> Returns a newly created Extension object.</p>
+<h3 id="create-of-extension">Create of Extension</h3>
+<p><strong>create new Extension:</strong> <code>createExtension([options])</code> Returns a newly created Extension object.</p>
 <h3 id="instance-methods-of-extension">Instance methods of Extension</h3>
 <ul>
 <li><p><strong>method:</strong> <code>ext.init(ws)</code> Returns <code>undefined</code>.

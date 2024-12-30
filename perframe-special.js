@@ -19,7 +19,9 @@
 /**
  * Implements the perframe-special WebSocket protocol extension
  */
-function Special() {
+function createSpecial() {
+
+    if (createSpecial === this.constructor) { throw new Error('This function must be used without the `new` keyword.'); }
 
     return {
 
@@ -56,4 +58,4 @@ function Special() {
     };
 }
 
-module.exports = Special;
+module.exports = createSpecial;

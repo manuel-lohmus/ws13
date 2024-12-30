@@ -12,14 +12,14 @@
   - [License](#license)
   - [Usage](#usage)
 - [**WebSocket** - interface](#websocket)
-  - [Constructors](#constructors-of-websocket)
+  - [Create new instance](#create-of-websocket)
   - [Static properties](#static-properties-of-websocket)
   - [Instance properties](#instance-properties-of-websocket)
   - [Instance methods](#instance-methods-of-websocket)
   - [Events](#events-of-websocket)
 - [**Ready state constants**](#ready-state-constants)
 - [**Extension** - interface](#extension)
-  - [Constructors](#constructors-of-extension)
+  - [Create new instance](#create-of-extension)
   - [Instance methods](#instance-methods-of-extension)
 - [**Frame** - interface](#frame)
   - [Instance properties](#instance-properties-of-frame)
@@ -112,16 +112,16 @@ This project is licensed under the MIT License.
 `ws13` support ESM and CJS module format in Node.js
 
 ```js
-import WebSocket from 'ws13';
+import createWebSocket from 'ws13';
 // or
-const WebSocket = require('ws13');
+const createWebSocket = require('ws13');
 ```
 
 **Example of use on a server**
 
 ```js
 const { createServer } = require('node:http');
-const WebSocket = require('ws13');
+const createWebSocket = require('ws13');
 
 const server = createServer();
 let wsList = [];
@@ -129,7 +129,7 @@ let wsList = [];
 server.on('upgrade', function (request) {
 
     // upgrade WebSocket
-    const websocket = new WebSocket({ request });
+    const websocket = createWebSocket({ request });
 
     // has WebSocket, the handshake is done
     if (websocket) {
@@ -170,12 +170,12 @@ then do the following.
 
 ```js
 const http = require('node:http');
-const WebSocket = require('ws13');
+const createWebSocket = require('ws13');
 
-const ws = new WebSocket({
-    request: http.request({ 
-        hostname: '127.0.0.1', 
-        port: 80, 
+const ws = createWebSocket({
+    request: http.request({
+        hostname: '127.0.0.1',
+        port: 80,
         path: '/test'
     })
 })
@@ -225,10 +225,10 @@ Complete example of use on the server and client side can be found in the [examp
 
 To use secure communication, you need to use the `https` module and the `wss` protocol.
 
-**Example of use on a server**
+**Example of use on a `https` server**
 ```js
 const { createServer } = require('node:https');
-const WebSocket = require('ws13');
+const createWebSocket = require('ws13');
 
 const server = createServer({
     // path to the key and certificate
@@ -241,7 +241,7 @@ let wsList = [];
 server.on('upgrade', function (request) {
 
     // upgrade WebSocket
-    const websocket = new WebSocket({ request });
+    const websocket = createWebSocket({ request });
 
     // has WebSocket, the handshake is done
     if (websocket) {
@@ -275,13 +275,13 @@ server.on('upgrade', function (request) {
 
 The `WebSocket` interface is the main interface for the WebSocket API.
 
-It extends the [`EventEmitter`](https://nodejs.org/docs/latest/api/events.html).
+It base the [`EventEmitter`](https://nodejs.org/docs/latest/api/events.html).
 
-### Constructors of WebSocket
+### Create of WebSocket
 
-**constructor:** `WebSocket(options)` Returns a newly created WebSocket object.
+**create new instance:** `createWebSocket(options)` Returns a newly created WebSocket object.
 
-constructor parameters:
+method parameters:
 - **parameter:** `options` Type `object`. 
   - `isDebug` Value type `boolean`. If set to `true`, more info in console. Default `false`.
   - `request` Value type `http.IncomingMessage` or `http.ClientRequest`. Reference (role of server [http.IncomingMessage](https://nodejs.org/docs/latest/api/http.html#class-httpincomingmessage)) or (role of client [http.ClientRequest](https://nodejs.org/docs/latest/api/http.html#class-httpclientrequest))
@@ -316,6 +316,7 @@ constructor parameters:
     the server selected; this will be one of the strings specified in the protocols 
     parameter when creating the WebSocket object, or the empty string if no connection is established.
 - **property:** `ws.path` Value type `string`. 
+- **property:** `ws.url` Value type `string`.
 - **property:** `ws.origin` Value type `string`. 
 - **property:** `ws.heartbeatInterval_ms` Value type `number`. 
 - **property:** `ws.ip` Value type `string`. IP address
@@ -406,9 +407,9 @@ constructor parameters:
 
 Extending the interface for `permessage-deflate` and `permessage-masking`
 
-### Constructors of Extension
+### Create of Extension
 
-**constructor:** `Extension([options])` Returns a newly created Extension object.
+**create new Extension:** `createExtension([options])` Returns a newly created Extension object.
 
 ### Instance methods of Extension
 

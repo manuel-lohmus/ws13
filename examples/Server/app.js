@@ -1,6 +1,6 @@
 'use strict';
 
-import WebSocket from 'ws13';
+import createWebSocket from 'ws13';
 import http from 'node:http';
 import fs from 'node:fs';
 import { pipeline } from 'node:stream';
@@ -12,7 +12,7 @@ var server = new http.createServer(),
 server.on('upgrade', function upgrade(request) {
 
     // creates WebSocket
-    var websocket = WebSocket({
+    var websocket = createWebSocket({
 
         // upgrade request
         request,
