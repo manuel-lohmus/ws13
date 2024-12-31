@@ -140,3 +140,6 @@ server.listen(3000, 'localhost', function () {
     console.log('Server running at http://localhost:3000/');
     console.log('Open the browser and go to http://localhost:3000/ to connect to the websocket server.');
 });
+
+// The server will automatically shut down after 5 minutes (300000 milliseconds)
+setTimeout(function () { process.exit(); }, 300000);
