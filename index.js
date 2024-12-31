@@ -200,9 +200,14 @@ function createWebSocket({
 
         request.on('upgrade', function (response) {
 
-            var err = validateHandshake(response.headers);
+            var err = validateHandshake(response?.headers);
 
             if (err) { return destroy(err); }
+
+            if (response?.headers?.["sec-websocket-protocol"]) {
+
+                protocol = response.headers["sec-websocket-protocol"];
+            }
 
             if (response?.headers?.["sec-websocket-extensions"]) {
 
@@ -298,8 +303,8 @@ function createWebSocket({
         if (!socket
             || headers?.["sec-websocket-version"] !== '13'
             || !headers?.["sec-websocket-key"]) { return false; }
-        // TODO > protocol accept > Done
-        if (protocol && headers && headers?.["sec-websocket-protocol"] !== protocol) {
+        if (protocol && headers && headers["sec-websocket-protocol"]
+            && headers["sec-websocket-protocol"] !== protocol) {
 
             var offerProtocols = headers?.["sec-websocket-protocol"].split(',')
                 .map(entry => (entry + '').trim().toLowerCase()),

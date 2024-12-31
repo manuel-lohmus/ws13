@@ -219,7 +219,7 @@ const ws = createWebSocket({
 </html>
 ```
 
-Complete example of use on the server and client side can be found in the [examples/Server](https://github.com/manuel-lohmus/ws13/tree/master/examples/Server) directory.
+Complete example of use on the server and client side can be found in the [examples/chat](https://github.com/manuel-lohmus/ws13/tree/master/examples/chat) directory.
 
 **Secure communication**
 

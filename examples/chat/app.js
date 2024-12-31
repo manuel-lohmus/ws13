@@ -6,12 +6,13 @@ import fs from 'node:fs';
 import { pipeline } from 'node:stream';
 
 var server = new http.createServer(),
-    wsList = [];
+    chatList = [],
+    superchatList = [];
 
 // upgrade event for WebSocket
 server.on('upgrade', function upgrade(request) {
 
-    // creates WebSocket
+    // create WebSocket for sub-protocol: 'chat'
     var websocket = createWebSocket({
 
         // upgrade request
@@ -21,7 +22,7 @@ server.on('upgrade', function upgrade(request) {
         isDebug: true,
 
         // the sub-protocol the server is ready to communicate with the client (optional)
-        /*protocol = '',*/
+        protocol: 'chat',
 
         // the origin of the request (optional)
         origin: 'http://localhost:3000',
@@ -37,7 +38,7 @@ server.on('upgrade', function upgrade(request) {
     if (websocket) {
 
         // inserts a WebSocket from the list
-        wsList.push(websocket);
+        chatList.push(websocket);
 
         // add listeners to the WebSocket
         websocket
@@ -52,21 +53,63 @@ server.on('upgrade', function upgrade(request) {
             .on('message', (event) => {
 
                 // send to everyone
-                wsList.forEach(function (socket) {
+                chatList.forEach(function (socket) {
 
                     // send message to the client
-                    socket.send(`ws-${wsList.indexOf(websocket)}: ${event.data}`);
+                    socket.send(`chat-${chatList.indexOf(websocket)}: ${event.data}`);
                 });
             })
             // connection closed with the client
             .on('close', function (event) {
 
                 // removing an WebSocket from list 
-                wsList = wsList.filter(ws => ws !== websocket);
+                chatList = chatList.filter(ws => ws !== websocket);
             });
+
+        return;
     }
-        // handshake not accepted, close the connection with the client
-    else { request.socket.end(); }
+
+    
+    // create WebSocket for sub-protocol: 'superchat'
+    websocket = createWebSocket({ request, protocol: 'superchat' });
+
+    // has WebSocket, the handshake is done
+    if (websocket) {
+
+        // inserts a WebSocket from the list
+        superchatList.push(websocket);
+
+        // add listeners to the WebSocket
+        websocket
+            // error handling
+            .on('error', console.error)
+            // connection established with the client (handshake done)
+            .on('open', () => {
+
+                /* now you can send and receive messages */
+            })
+            // message received from the client (event.isBinary is boolean) (event.data is string or buffer)
+            .on('message', (event) => {
+
+                // send to everyone
+                superchatList.forEach(function (socket) {
+
+                    // send message to the client
+                    socket.send(`superchat-${superchatList.indexOf(websocket)}: ${event.data}`);
+                });
+            })
+            // connection closed with the client
+            .on('close', function (event) {
+
+                // removing an WebSocket from list 
+                superchatList = superchatList.filter(ws => ws !== websocket);
+            });
+
+        return;
+    }
+
+    // handshake not accepted, close the connection with the client
+    request.socket.end();
 
 });
 

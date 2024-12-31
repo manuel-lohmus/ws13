@@ -222,8 +222,8 @@ testRunner("WS - Tests            ", { skip: false }, (test) => {
 /**
  * Test runner. Function to run unit tests in the console.
  * @author Manuel Lõhmus 2024 (MIT License)
- * @version 1.1.0
- * [2024-12-29] adde    d functionality to select tests by ID in the command line arguments (e.g. --testID=1 2 3)
+ * @version 1.1.1
+ * [2024-12-29] adde    d functionality to select tests by ID in the command line arguments (e.g. --testIDs=1 2 3)
  * @example `npm test '--'` or `node index.test.js`
  * @example `npm test '--' --help` or `node index.test.js --help`
  * @example `npm test '--' --testIDs=1 2 3` or `node index.test.js --testIDs=1 2 3`
@@ -285,7 +285,7 @@ node index.test.js [OPTION1=VALUE1] [OPTION2=VALUE2] ...
 
 The following options are supported:
     --help      Display this help
-    --testID    Number of the test to run
+    --testIDs   Number of the test to run (e.g. node index.test.js --testIDs=1 2 3)
     `);
 
         if (process.argv[1].endsWith(".js")) { exitPressKey(); }

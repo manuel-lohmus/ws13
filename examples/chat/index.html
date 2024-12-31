@@ -29,10 +29,11 @@
 
             if (!wsHost) { return; }
 
-            const host = location.protocol.replace('http', 'ws') + '//' + wsHost;
+            const host = location.protocol.replace('http', 'ws') + '//' + wsHost,
+                protocol = $('#subProtocol')?.value ? $('#subProtocol')?.value.split(' ') : [];
 
             try {
-                socket = new WebSocket(host);
+                socket = new WebSocket(host, protocol);
                 state();
 
                 socket.onmessage = function (event) {
@@ -58,7 +59,10 @@
 
             setTimeout(function () {
 
-                $('#status').innerHTML = 'WebSocket - ' + (socket === null ? 'CLOSED' : constants[socket.readyState]);
+                $('#status').innerHTML = '<b>Status:</b> <code>' + (socket === null ? 'CLOSED' : constants[socket.readyState]) + '</code>';
+                $('#selectProtocol').innerHTML = socket === null || !socket.protocol
+                    ? ''
+                    : ' <b>Sub-Protocol:</b> <code>' + socket.protocol + '</code> <b>Extensions:</b> <code>' + socket.extensions + '</code>';
 
                 if (socket && constants[socket.readyState] === "OPEN") {
 
@@ -134,10 +138,16 @@
 <body onload="init()">
     <h3>WebSocket Test</h3>
     <table>
-        <tr><td><span id="status"></span></td></tr>
+        <tr><td><span id="status"></span> <span id="selectProtocol"></span></td></tr>
         <tr><td><div id="log"></div></td></tr>
         <tr>
             <td>
+                <select id="subProtocol">
+                    <option value="chat" selected>chat</option>
+                    <option value="superchat">superchat</option>
+                    <option value="">none</option>
+                    <option value="superchat chat">any</option>
+                </select>
                 <input id="msg" list="commands" type="text" onkeypress="onkey(event)" />
                 <datalist id="commands"></datalist>
                 <button id="btnSend" onclick="send()">Send</button>
