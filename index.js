@@ -19,9 +19,7 @@ var { Buffer } = require('node:buffer'),
  * @property {string} origin String. Default empty string.
  * @property {number} heartbeatInterval_ms The interval after which ping pong takes place. Default on the client side 0ms and on the server side 30000ms.
  * @property {Extension|null} extension The extensions selected by the server. Default 'permessage-deflate'
- */
-
-/**
+ *
  * @typedef Extension for WebSocket
  * @property {(ws:WebSocket)=>void} init
  * @property {(headers:object, cb:(err:Error, isActivate:boolean)=>void)=>void} activate
@@ -34,9 +32,7 @@ var { Buffer } = require('node:buffer'),
  * @property {(message:Message, cb:(err:Error, message:Message)=>void)=>void} processOutgoingMessage
  * @property {(message:Message, cb:(err:Error, message:Message)=>void)=>void} processIncomingMessage
  * @property {(cb:(err:Error)=>void)=>void} close
- */
-
-/**
+ *
  * @typedef Frame for WebSocket
  * @property {boolean} isFin
  * @property {boolean} isRsv1
@@ -47,9 +43,7 @@ var { Buffer } = require('node:buffer'),
  * @property {number} payloadLength
  * @property {[]|null} maskingKey
  * @property {Buffer|null} payload
- */
-
-/**
+ *
  * @typedef WebSocket WebSocket is a communication protocol that makes it possible to establish a two-way communication channel between a server and a client.
  * @property {0} CONNECTING The connection is not yet open.
  * @property {1} OPEN The connection is open and ready to communicate.
@@ -195,7 +189,7 @@ function createWebSocket({
         socket = request.socket;
         socket.once('ready', function () {
 
-            pDebug("The client's handshake`request` has been sent.");
+            pDebug("The client's handshake`request` has been sent.", "ip", ws.ip);
         });
 
         request.on('upgrade', function (response) {
@@ -235,7 +229,7 @@ function createWebSocket({
                 readyState = ws.OPEN;
                 ws.emit('open');
                 heartbeatTimeout = setTimeout(heartbeat);
-                pDebug('The client handshake is "Accepted".');
+                pDebug('The client handshake is "Accepted".', "ip", ws.ip);
             }
             function destroy(err) {
 
@@ -377,7 +371,7 @@ function createWebSocket({
                 readyState = ws.OPEN;
                 ws.emit('open');
 
-                pDebug('The server handshake `response` has been sent.');
+                pDebug('The server handshake `response` has been sent.', "ip", ws.ip);
             });
         }
     }
@@ -457,7 +451,7 @@ function createWebSocket({
 
             sendFrames(payload, { opcode: 9 }, function () {
 
-                pDebug(`Ping >`);
+                pDebug(`Ping >`, "ip", ws.ip);
 
                 pingStartTime = performance.now();
             });
@@ -475,7 +469,7 @@ function createWebSocket({
 
             sendFrames(payload, { opcode: 10 }, function () {
 
-                pDebug(`Pong >`);
+                pDebug(`Pong >`, "ip", ws.ip);
             });
         }
     }
@@ -537,7 +531,7 @@ function createWebSocket({
 
             if (socket?.readyState === 'open' || socket?.readyState === 'writeOnly') {
 
-                pDebug(`CloseFrame > code: ${code} reason: '${reason}'`);
+                pDebug(`CloseFrame > code: ${code} reason: '${reason}'`, "ip", ws.ip);
 
                 if (!Buffer.isBuffer(reason)) { reason = Buffer.from(reason, 'utf8'); }
                 if (reason.length > 125) { reason = reason.subarray(0, 125); }
@@ -575,7 +569,7 @@ function createWebSocket({
 
                 ws.emit('close', { code, reason: reason.toString(), wasCleanClose });
 
-                pDebug(`Closed code: ${code} reason: ${reason.toString() }  wasClean: ${wasCleanClose}`);
+                pDebug(`Closed code: ${code} reason: ${reason.toString()}  wasClean: ${wasCleanClose}`, "ip", ws.ip);
             }
         }
     }
@@ -585,7 +579,7 @@ function createWebSocket({
 
             sendFrames(payload, {}, function (length, opcode) {
 
-                pDebug(`Data > length: ${length} opcode: ${opcode}`);
+                pDebug(`Data > length: ${length} opcode: ${opcode}`, "ip", ws.ip);
             });
         }
     }
@@ -1057,7 +1051,7 @@ function createWebSocket({
                     case 1:
                     // Binary - Application binary data.
                     case 2:
-                        pDebug(`Event: Data < length: ${inFrame.payloadLength} opcode: ${inFrame.opcode}`);
+                        pDebug(`Event: Data < length: ${inFrame.payloadLength} opcode: ${inFrame.opcode}`, "ip", ws.ip);
                         pushData();
                         break;
 
@@ -1068,7 +1062,7 @@ function createWebSocket({
 
                         //if (!code) { code = 1005; reason = 'No code received.'; }
 
-                        pDebug(`Event: Close < code: ${code} reason: '${reason}'`);
+                        pDebug(`Event: Close < code: ${code} reason: '${reason}'`, "ip", ws.ip);
 
                         if (readyState === ws.OPEN) {
 
@@ -1086,7 +1080,7 @@ function createWebSocket({
 
                     // Ping
                     case 9:
-                        pDebug(`Event: Ping <`);
+                        pDebug(`Event: Ping <`, "ip", ws.ip);
 
                         if (inFrame.payload.length > 125) { ws.close(1009); }
 
@@ -1104,7 +1098,7 @@ function createWebSocket({
                             latency_ms = performance.now() - pingStartTime;
                             pingStartTime = 0;
 
-                            pDebug(`Event: Pong < Latency: ${latency_ms.toFixed(2)}ms.`);
+                            pDebug(`Event: Pong < Latency: ${latency_ms.toFixed(2)}ms.`, "ip", ws.ip);
 
                             heartbeat();
                         }
@@ -1189,8 +1183,8 @@ function createWebSocket({
         }
     }
 
-    function pDebug(msg) { if (isDebug) { console.log(`[ DEBUG ] ${msg} :: Address: ${ws.ip}:${ws.port}`); } }
-    function pError(msg) { if (isDebug) { console.error(`[ ERROR ] ${msg} :: Address: ${ws.ip}:${ws.port}`); } }
+    function pDebug(msg) { if (isDebug) { console.log(`[ DEBUG ] 'ws13' `, ...arguments); } }
+    function pError(msg) { if (isDebug) { console.error(`[ ERROR ] 'ws13' `, ...arguments); } }
 }
 
 
