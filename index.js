@@ -154,8 +154,8 @@ function createWebSocket({
 
     ws.on('open', function (event) { if (typeof ws.onopen === 'function') { ws.onopen.call(ws, event); } });
     ws.on('message', function (event) { if (typeof ws.onmessage === 'function') { ws.onmessage.call(ws, event); } });
-    ws.on('ping', function (event) { if (typeof ws.onmessage === 'function') { ws.onping.call(ws, event); } });
-    ws.on('pong', function (event) { if (typeof ws.onmessage === 'function') { ws.onpong.call(ws, event); } });
+    ws.on('ping', function (event) { if (typeof ws.onping === 'function') { ws.onping.call(ws, event); } });
+    ws.on('pong', function (event) { if (typeof ws.onpong === 'function') { ws.onpong.call(ws, event); } });
     ws.on('close', function (event) { if (typeof ws.onclose === 'function') { ws.onclose.call(ws, event); } });
     ws.on('error', function (event) { if (typeof ws.onerror === 'function') { ws.onerror.call(ws, event); } });
 
