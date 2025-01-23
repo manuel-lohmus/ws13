@@ -9,7 +9,6 @@
   - [Features](#features)
   - [Installation](#installation)
   - [Testing](#testing)
-  - [License](#license)
   - [Usage](#usage)
 - [**WebSocket** - interface](#websocket)
   - [Create new instance](#create-of-websocket)
@@ -23,6 +22,7 @@
   - [Instance methods](#instance-methods-of-extension)
 - [**Frame** - interface](#frame)
   - [Instance properties](#instance-properties-of-frame)
+- [**License**](#license)
 
 
  
@@ -36,8 +36,6 @@
 # WebSocket API [version 13] 
 
 This manual is also available in [HTML5](https://manuel-lohmus.github.io/ws13/README.html). 
-<br>
-This document was created with the help of Copilot
 
 ## Description
 
@@ -100,12 +98,6 @@ You can test `ws13` on your system using this command:
 or in the `ws13` project directory:
 
 `npm test`
-
-## License
-
-This project is licensed under the MIT License.
-
-[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/donate?hosted_button_id=4DAKNYHBD9MNC)
 
 ## Usage
 
@@ -498,7 +490,19 @@ Frame type `object`.
 - **property:** `frame.maskingKey` Value type `[]`.
 - **property:** `frame.payload` Value type `Buffer`.
 
+## License
 
+This project is licensed under the MIT License.
+
+Copyright &copy; 2024 Manuel Lõhmus
+
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/donate?hosted_button_id=4DAKNYHBD9MNC)
+
+Donations are welcome and will go towards further development of this project.
+
+<br>
+<br>
+<br>
 </div>
 </div>
 </div>

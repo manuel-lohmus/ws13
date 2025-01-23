@@ -1,6 +1,6 @@
 {
   "name": "ws13",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A simple and easy-to-use WebSocket protocol implementation.",
   "license": "MIT",
   "author": "Manuel Lõhmus <manuel@hauss.ee>",
