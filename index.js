@@ -1,6 +1,7 @@
 /**  Copyright (c) 2024, Manuel Lõhmus (MIT License). */
 
 // WebSocket 
+"use strict";
 
 var { Buffer } = require('node:buffer'),
     crypto = require('node:crypto'),
@@ -87,7 +88,7 @@ function createWebSocket({
     extension = createPermessageDeflate() // The extensions selected by the server. Default 'permessage-deflate'
 } = {}) {
 
-    if (createWebSocket === this.constructor) { throw new Error('This function must be used without the `new` keyword.'); }
+    if (createWebSocket === this?.constructor) { throw new Error('This function must be used without the `new` keyword.'); }
 
     if (!isRoleOfServer() && !(request instanceof http.ClientRequest)) { return null; }
 
@@ -587,6 +588,7 @@ function createWebSocket({
         isRsv1 = false,
         isRsv2 = false,
         isRsv3 = false,
+        isMasked = false,
         opcode = 2,
         maskingKey = null
     }, callback = function () { }) {
@@ -711,6 +713,7 @@ function createWebSocket({
                             isRsv2 = frame.isRsv2;
                             isRsv3 = frame.isRsv3;
                             opcode = frame.opcode;
+                            isMasked = frame.isMasked;
                             maskingKey = frame.maskingKey;
                             buf = frame.payload;
 

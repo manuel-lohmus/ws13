@@ -1,6 +1,7 @@
 ﻿/**  Copyright (c) 2024, Manuel Lõhmus (MIT License). */
 
 // permessage-deflate extension
+"use strict";
 
 var zlib = require('node:zlib');
 
@@ -68,7 +69,7 @@ function createPermessageDeflate({
     noContextTakeover = false
 } = {}) {
 
-    if (createPermessageDeflate === this.constructor) { throw new Error('This function must be used without the `new` keyword.'); }
+    if (createPermessageDeflate === this?.constructor) { throw new Error('This function must be used without the `new` keyword.'); }
 
     var isRoleOfServer = true,
         client_no_context_takeover = false,

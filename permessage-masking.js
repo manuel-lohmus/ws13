@@ -1,6 +1,7 @@
 ﻿/**  Copyright (c) 2024, Manuel Lõhmus (MIT License). */
 
 // fast-perframe-masking extension
+"use strict";
 
 /**
  * @typedef Frame
@@ -21,7 +22,7 @@
  */
 function createMasking() {
 
-    if (createMasking === this.constructor) { throw new Error('This function must be used without the `new` keyword.'); }
+    if (createMasking === this?.constructor) { throw new Error('This function must be used without the `new` keyword.'); }
 
     return {
 

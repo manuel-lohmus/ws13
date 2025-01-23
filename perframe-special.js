@@ -1,6 +1,7 @@
 ﻿/**  Copyright (c) 2024, Manuel Lõhmus (MIT License). */
 
 // perframe-special extension
+"use strict";
 
 /**
  * @typedef Frame
@@ -21,7 +22,7 @@
  */
 function createSpecial() {
 
-    if (createSpecial === this.constructor) { throw new Error('This function must be used without the `new` keyword.'); }
+    if (createSpecial === this?.constructor) { throw new Error('This function must be used without the `new` keyword.'); }
 
     return {
 

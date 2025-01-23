@@ -1,5 +1,7 @@
 /**  Copyright (c) 2024, Manuel Lõhmus (MIT License). */
 
+"use strict";
+
 var http = require('node:http'),
     WebSocket = require('./index'),
     port = process.env.PORT || 3000;
