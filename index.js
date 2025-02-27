@@ -131,8 +131,8 @@ function createWebSocket({
 
         // ATTRIBUTES
         protocol: { value: protocol, writable: true, configurable: false, enumerable: false },
-        path: { value: request?.url || request.path, writable: false, configurable: false, enumerable: false },
-        url: { value: request?.url || request.path, writable: false, configurable: false, enumerable: false },
+        path: { value: request?.url || request?.path, writable: false, configurable: false, enumerable: false },
+        url: { value: request?.url || request?.path, writable: false, configurable: false, enumerable: false },
         origin: { value: origin, writable: true, configurable: false, enumerable: false },
         heartbeatInterval_ms: {
             get() { return heartbeatInterval_ms; },
@@ -313,9 +313,9 @@ function createWebSocket({
 
             protocol = selected;
         }
-        if (origin && request?.headers?.origin !== origin) {
+        if (origin && headers?.origin !== origin) {
 
-            if (origin.indexOf(request?.headers?.host) === -1) {
+            if (origin.indexOf(headers?.host) === -1) {
 
                 return false;
             }

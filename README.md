@@ -35,7 +35,8 @@
 
 # WebSocket API [version 13] 
 
-This manual is also available in [HTML5](https://manuel-lohmus.github.io/ws13/README.html). 
+This manual is also available in [HTML5](https://manuel-lohmus.github.io/ws13/README.html).<br> 
+<!--[![npm-version](https://badgen.net/npm/v/ws13)](https://www.npmjs.com/package/ws13)-->
 
 ## Description
 

@@ -1,6 +1,6 @@
 {
   "name": "ws13",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A simple and easy-to-use WebSocket protocol implementation.",
   "license": "MIT",
   "author": "Manuel Lõhmus <manuel@hauss.ee>",
@@ -43,5 +43,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manuel-lohmus/ws13.git"
-  }
+  },
+  "funding": "https://manuel-lohmus.github.io/ws13/README.html#license"
 }

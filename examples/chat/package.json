@@ -12,6 +12,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "ws13": "^1.0.0"
+    "ws13": "^1.0.7"
   }
 }
