@@ -1,11 +1,15 @@
 'use strict';
 
 import createWebSocket from 'ws13';
-import http from 'node:http';
+import https from 'node:https';
 import fs from 'node:fs';
 import { pipeline } from 'node:stream';
 
-var server = new http.createServer(),
+var server = new https.createServer({
+        key: fs.readFileSync('localhost-key.pem'),
+        cert: fs.readFileSync('localhost-cert.pem'),
+    }),
+    port = 443,
     chatList = [],
     superchatList = [];
 
@@ -135,10 +139,10 @@ server.on('request', function (req, res) {
 server.on('error', console.error);
 
 // start server
-server.listen(3000, 'localhost', function () {
+server.listen(port, 'localhost', function () {
     // server started successfully
-    console.log('Server running at http://localhost:3000/');
-    console.log('Open the browser and go to http://localhost:3000/ to connect to the websocket server.');
+    console.log(`Server running at https://localhost:${port}/`);
+    console.log(`Open the browser and go to https://localhost:${port}/ to connect to the websocket server.`);
 });
 
 // The server will automatically shut down after 5 minutes (300000 milliseconds)
