@@ -1,4 +1,4 @@
-﻿/**  Copyright (c) 2024, Manuel Lõhmus (MIT License). */
+/**  Copyright (c) Manuel Lõhmus (MIT License). */
 
 // perframe-special extension
 "use strict";

@@ -1,4 +1,13 @@
+<div class="row w-100">
+<div class="col-12 text-center">
 
+# WebSocket API [version 13] 
+
+A simple and easy-to-use WebSocket protocol implementation.<br>
+This manual is also available in [HTML5](https://manuel-lohmus.github.io/ws13/README.html).
+
+</div>
+</div> 
 <div class="row w-100">
 <div class="col-lg-3 d-lg-inline">
 <div class="sticky-top overflow-auto vh-lg-100">
@@ -32,11 +41,6 @@
 <div class="col-lg-9 mt-2">
 <div class="ps-4 markdown-body" data-bs-spy="scroll" data-bs-target="#list-headers" data-bs-offset="0" tabindex="0">
 
-# WebSocket API [version 13] 
-
-This manual is also available in [HTML5](https://manuel-lohmus.github.io/ws13/README.html).<br> 
-<!--[![npm-version](https://badgen.net/npm/v/ws13)](https://www.npmjs.com/package/ws13)-->
-
 ## Description
 
 The WebSocket API is an advanced technology that makes it 
@@ -63,6 +67,9 @@ Common use cases for the WebSocket API include:
 These use cases benefit from WebSocket's ability to maintain a persistent connection, allowing for efficient and low-latency communication between the client and server.
 
 The WebSocket API is defined by the [WebSocket](https://html.spec.whatwg.org/multipage/web-sockets.html#the-websocket-interface) interface, which is part of the [HTML Living Standard](https://html.spec.whatwg.org/multipage/). The API provides a set of methods, properties, and events that enable developers to create WebSocket connections and interact with them in a web application.
+This module is part of the ['conextra'](https://www.npmjs.com/package/conextra) framework,
+which is a simple and easy-to-use single-page application (SPA) framework.
+You have to try it! A different solution than MVC (model–view–controller).
 
 ## Features
 
@@ -103,7 +110,7 @@ or in the `ws13` project directory:
 
 `ws13` support ESM and CJS module format in Node.js
 
-```js
+```javascript
 import createWebSocket from 'ws13';
 // or
 const createWebSocket = require('ws13');
@@ -111,7 +118,7 @@ const createWebSocket = require('ws13');
 
 **Example of use on a server**
 
-```js
+```javascript
 const { createServer } = require('node:http');
 const createWebSocket = require('ws13');
 
@@ -160,7 +167,7 @@ should be preferred, which should provide better results.
 If it is important that the same code runs on the client and server side, 
 then do the following.
 
-```js
+```javascript
 const http = require('node:http');
 const createWebSocket = require('ws13');
 
@@ -218,7 +225,7 @@ Complete example of use on the server and client side can be found in the [examp
 To use secure communication, you need to use the `https` module and the `wss` protocol.
 
 **Example of use on a `https` server**
-```js
+```javascript
 const { createServer } = require('node:https');
 const createWebSocket = require('ws13');
 
@@ -494,7 +501,7 @@ Frame type `object`.
 
 This project is licensed under the MIT License.
 
-Copyright &copy; 2024 Manuel Lõhmus
+Copyright &copy; Manuel Lõhmus
 
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/donate?hosted_button_id=4DAKNYHBD9MNC)
 

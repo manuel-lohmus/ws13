@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Table of contents</title>
+    <title>WebSocket API [version 13]</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" />
     <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js"></script>
@@ -30,6 +30,13 @@
 </head>
 <body>
     <div class="row w-100">
+<div class="col-12 text-center">
+<h1 id="websocket-api-version-13">WebSocket API [version 13]</h1>
+<p>A simple and easy-to-use WebSocket protocol implementation.<br>
+This manual is also available in <a href="https://manuel-lohmus.github.io/ws13/README.html">HTML5</a>.</p>
+</div>
+</div> 
+<div class="row w-100">
 <div class="col-lg-3 d-lg-inline">
 <div class="sticky-top overflow-auto vh-lg-100">
 <div id="list-headers" class="list-group mt-2 ms-lg-2 ms-4">
@@ -73,9 +80,6 @@
  
 <div class="col-lg-9 mt-2">
 <div class="ps-4 markdown-body" data-bs-spy="scroll" data-bs-target="#list-headers" data-bs-offset="0" tabindex="0">
-<h1 id="websocket-api-version-13">WebSocket API [version 13]</h1>
-<p>This manual is also available in <a href="https://manuel-lohmus.github.io/ws13/README.html">HTML5</a>.<br></p>
-<!--[![npm-version](https://badgen.net/npm/v/ws13)](https://www.npmjs.com/package/ws13)-->
 <h2 id="description">Description</h2>
 <p>The WebSocket API is an advanced technology that makes it
 possible to open a two-way interactive communication session
@@ -100,7 +104,10 @@ responses without having to poll the server for a reply.</p>
 These use cases benefit from WebSocket's ability to maintain a persistent connection, allowing for efficient and low-latency communication between the client and server.</p>
 </li>
 </ol>
-<p>The WebSocket API is defined by the <a href="https://html.spec.whatwg.org/multipage/web-sockets.html#the-websocket-interface">WebSocket</a> interface, which is part of the <a href="https://html.spec.whatwg.org/multipage/">HTML Living Standard</a>. The API provides a set of methods, properties, and events that enable developers to create WebSocket connections and interact with them in a web application.</p>
+<p>The WebSocket API is defined by the <a href="https://html.spec.whatwg.org/multipage/web-sockets.html#the-websocket-interface">WebSocket</a> interface, which is part of the <a href="https://html.spec.whatwg.org/multipage/">HTML Living Standard</a>. The API provides a set of methods, properties, and events that enable developers to create WebSocket connections and interact with them in a web application.
+This module is part of the <a href="https://www.npmjs.com/package/conextra">'conextra'</a> framework,
+which is a simple and easy-to-use single-page application (SPA) framework.
+You have to try it! A different solution than MVC (model–view–controller).</p>
 <h2 id="features">Features</h2>
 <p>The WebSocket API offers several key features that make it a powerful tool for building real-time web applications:</p>
 <ol>
@@ -129,12 +136,12 @@ These use cases benefit from WebSocket's ability to maintain a persistent connec
 <p><code>npm test</code></p>
 <h2 id="usage">Usage</h2>
 <p><code>ws13</code> support ESM and CJS module format in Node.js</p>
-<pre><code class="language-js">import createWebSocket from 'ws13';
+<pre><code class="language-javascript">import createWebSocket from 'ws13';
 // or
 const createWebSocket = require('ws13');
 </code></pre>
 <p><strong>Example of use on a server</strong></p>
-<pre><code class="language-js">const { createServer } = require('node:http');
+<pre><code class="language-javascript">const { createServer } = require('node:http');
 const createWebSocket = require('ws13');
 
 const server = createServer();
@@ -178,7 +185,7 @@ server.on('upgrade', function (request) {
 should be preferred, which should provide better results.</p>
 <p>If it is important that the same code runs on the client and server side,
 then do the following.</p>
-<pre><code class="language-js">const http = require('node:http');
+<pre><code class="language-javascript">const http = require('node:http');
 const createWebSocket = require('ws13');
 
 const ws = createWebSocket({
@@ -228,7 +235,7 @@ const ws = createWebSocket({
 <p><strong>Secure communication</strong></p>
 <p>To use secure communication, you need to use the <code>https</code> module and the <code>wss</code> protocol.</p>
 <p><strong>Example of use on a <code>https</code> server</strong></p>
-<pre><code class="language-js">const { createServer } = require('node:https');
+<pre><code class="language-javascript">const { createServer } = require('node:https');
 const createWebSocket = require('ws13');
 
 const server = createServer({
@@ -525,7 +532,7 @@ Initialisation.</p>
 </ul>
 <h2 id="license">License</h2>
 <p>This project is licensed under the MIT License.</p>
-<p>Copyright © 2024 Manuel Lõhmus</p>
+<p>Copyright © Manuel Lõhmus</p>
 <p><a href="https://www.paypal.com/donate?hosted_button_id=4DAKNYHBD9MNC"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="Donate" /></a></p>
 <p>Donations are welcome and will go towards further development of this project.</p>
 <br>
