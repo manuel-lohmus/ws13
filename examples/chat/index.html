@@ -122,8 +122,8 @@
 
             var log = $('#log'),
                 scrollDown = log.scrollHeight - log.scrollTop - log.clientHeight < 1;
-
-            log.innerHTML += msg
+            debugger;
+            log.innerText += msg
                 .replace(new RegExp(" ", 'g'), "&ensp;")
                 .replace(new RegExp("\t", 'g'), "&emsp;&emsp;&emsp;")
                 .replace(new RegExp("\n", 'g'), "<br/>")
