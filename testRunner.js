@@ -6,6 +6,7 @@ const net = require('net'),
     { performance } = require('perf_hooks'),
     isWindows = process.platform === 'win32',
     path = require('path'),
+    os = require('os'),
     controlServerSocketPath = isWindows
         ? '\\\\.\\pipe\\test-runner-lite.sock'
         : path.join(os.tmpdir(), 'test-runner-lite.sock'),
