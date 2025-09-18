@@ -5,7 +5,7 @@
 
 # ws13 — WebSocket API v1.1.0
 
-Modular, extensible and operations-friendly WebSocket framework for Node.js. This release focuses on a small, stable core so dependent projects can proceed; extensions ([`channels`](./extensions/channels/README.html), [`auth`](./extensions/auth/README.html), [`history`](./extensions/history/README.html), [`events`](./extensions/events/README.html), [`admin`](./extensions/admin/README.html), [`routing`](./extensions/routing/README.html), [`heartbeat`](./extensions/heartbeat/README.html), [`message-meta`](./extensions/message-meta/README.html), `permessage-deflate`) exist as planned work and will be completed and documented in follow-up releases.
+Modular, extensible and operations-friendly WebSocket framework for Node.js. This release focuses on a small, stable core so dependent projects can proceed; extensions ([`channels`](./extensions/channels/README.md), [`auth`](./extensions/auth/README.md), [`history`](./extensions/history/README.md), [`events`](./extensions/events/README.md), [`admin`](./extensions/admin/README.md), [`routing`](./extensions/routing/README.md), [`heartbeat`](./extensions/heartbeat/README.md), [`message-meta`](./extensions/message-meta/README.md), `permessage-deflate`) exist as planned work and will be completed and documented in follow-up releases.
 
 Status: core stable and testable — extensions work in progress (APIs present in repository; integration examples available in examples/).
 
@@ -33,7 +33,7 @@ Status: core stable and testable — extensions work in progress (APIs present i
  - TypeScript definitions included ('index.d.ts') for IDE support.
  - Tests included for core registry and basic behaviour (see 'index.test.js').
 
-Extensions ([`channels`](./extensions/channels/README.html), [`events`](./extensions/events/README.html), [`history`](./extensions/history/README.html), [`admin`](./extensions/admin/README.html), [`routing`](./extensions/routing/README.html), [`message-meta`](./extensions/message-meta/README.html), [`heartbeat`](./extensions/heartbeat/README.html)) are available as separate modules in the repo but marked WIP — README below points to that.
+Extensions ([`channels`](./extensions/channels/README.md), [`events`](./extensions/events/README.md), [`history`](./extensions/history/README.md), [`admin`](./extensions/admin/README.md), [`routing`](./extensions/routing/README.md), [`message-meta`](./extensions/message-meta/README.md), [`heartbeat`](./extensions/heartbeat/README.md)) are available as separate modules in the repo but marked WIP — README below points to that.
 
 <p align="right"><a href="#ws13-logo">Back to top ↑</a></p>
 
@@ -147,14 +147,14 @@ Add more tests as needed; tests live next to core and in each extension folder w
 The following extensions exist as separate modules and will be fully documented and stabilised in subsequent releases. 
 Current status: prototype/partial implementations present in repo.
 
- - [`channels`](./extensions/channels/README.html) — channel-based pub/sub
- - [`message-meta`](./extensions/message-meta/README.html) — typed messages with meta (wrap/unwrap)
- - [`heartbeat`](./extensions/heartbeat/README.html) — idle/timeout hooks and monitor
- - [`history`](./extensions/history/README.html) — per-channel replay buffer (last N messages)
- - [`events`](./extensions/events/README.html) — JSON-RPC style event emitter (ws.onEvent / ws.emitEvent)
- - [`admin`](./extensions/admin/README.html) — HTTP + WebSocket admin API, CSV/JSON export, disconnect/latency endpoints, live dashboard
- - [`routing`](./extensions/routing/README.html) — targeted delivery (sendToUser, sendToRole, sendToIp)
- - [`auth`](./extensions/auth/README.html) — authentication and role-based authorization
+ - [`channels`](./extensions/channels/README.md) — channel-based pub/sub
+ - [`message-meta`](./extensions/message-meta/README.md) — typed messages with meta (wrap/unwrap)
+ - [`heartbeat`](./extensions/heartbeat/README.md) — idle/timeout hooks and monitor
+ - [`history`](./extensions/history/README.md) — per-channel replay buffer (last N messages)
+ - [`events`](./extensions/events/README.md) — JSON-RPC style event emitter (ws.onEvent / ws.emitEvent)
+ - [`admin`](./extensions/admin/README.md) — HTTP + WebSocket admin API, CSV/JSON export, disconnect/latency endpoints, live dashboard
+ - [`routing`](./extensions/routing/README.md) — targeted delivery (sendToUser, sendToRole, sendToIp)
+ - [`auth`](./extensions/auth/README.md) — authentication and role-based authorization
 
  If your project relies on a specific extension, tell me which one and I will prioritise finishing it and publishing a stable interface.
 
@@ -283,7 +283,7 @@ ws13/
 ## 📌 Contributing & development
 
  - If you need only the core to unblock dependent projects, use the provided core export and tests. Extensions will follow; they are useful but not required for core adoption.
- - Tell me which extension to stabilise first (`channels`, `history`, `events`, `auth`, `admin` or `routing`) and I’ll prepare stable API docs, tests, and examples.
+ - Tell me which extension to stabilise first ([`channels`](./extensions/channels/README.md), [`history`](./extensions/history/README.md), [`events`](./extensions/events/README.md), [`auth`](./extensions/auth/README.md), [`admin`](./extensions/admin/README.md) or [`routing`](./extensions/routing/README.md)) and I’ll prepare stable API docs, tests, and examples.
 
 <p align="right"><a href="#ws13-logo">Back to top ↑</a></p>
 
