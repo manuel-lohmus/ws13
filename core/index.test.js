@@ -203,21 +203,23 @@ testRunner("WS - Tests            ", { skip: false, timeout: 150000 }, (test) =>
             }
         });
 
-        server.listen(0, '127.0.0.1', () => {
-            const portLocal = server.address().port;
-            const clientReq = http.request({ hostname: '127.0.0.1', port: portLocal, path: '/' });
-            const client = WebSocket({ request: clientReq, protocol: '' });
+        server.listen(port + 1, '127.0.0.1', () => {
+            setTimeout(function () {
+                const portLocal = server.address().port;
+                const clientReq = http.request({ hostname: '127.0.0.1', port: portLocal, path: '/' });
+                const client = WebSocket({ request: clientReq, protocol: '' });
 
-            client.on('error', (err) => done(err));
-            client.on('open', () => {
-                check('client readyState open', client.readyState).mustBe(1);
-            });
-            client.on('message', (ev) => {
-                check('received reply', ev.data).mustBe('hi');
-            });
-            client.on('close', () => {
-                server.close(() => done());
-            });
+                client.on('error', (err) => done(err));
+                client.on('open', () => {
+                    check('client readyState open', client.readyState).mustBe(1);
+                });
+                client.on('message', (ev) => {
+                    check('received reply', ev.data).mustBe('hi');
+                });
+                client.on('close', () => {
+                    server.close(() => done());
+                });
+            }, 100);
         });
     });
 
@@ -283,7 +285,7 @@ testRunner("WS - Tests            ", { skip: false, timeout: 150000 }, (test) =>
             }
         });
 
-        server.listen(0, '127.0.0.1', () => {
+        server.listen(port + 2, '127.0.0.1', () => {
             const portLocal = server.address().port;
             const client = WebSocket({
                 request: http.request({ hostname: '127.0.0.1', port: portLocal, path: '/' }),

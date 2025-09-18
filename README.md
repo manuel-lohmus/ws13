@@ -19,7 +19,7 @@ Status: core stable and testable — extensions work in progress (APIs present i
 - [🧩 Extension roadmap](#-extension-roadmap-short)
 - [🛠 Operational notes](#-operational-notes)
 - [📁 Project Structure](#-project-structure)
-- [📜 License](#-license)
+- [📜 License - MIT](#-license)
 
 ---
 
