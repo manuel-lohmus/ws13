@@ -1,0 +1,10 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: 📚 Documentation
+    url: https://github.com/manuel-lohmus/ws13#readme
+    about: Read the full usage guide
+
+  # - name: 💬 Discussions
+  #   url: https://github.com/manuel-lohmus/ws13/discussions
+  #   about: Ask questions, share ideas, or get help from the community

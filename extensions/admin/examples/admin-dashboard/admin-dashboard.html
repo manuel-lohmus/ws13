@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>ws13 Admin Dashboard (Example)</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            padding: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .summary {
+            margin-bottom: 12px;
+        }
+
+        .controls {
+            margin-top: 12px;
+        }
+
+        button {
+            padding: 6px 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>ws13 Admin Dashboard (Demo)</h2>
+    <div class="summary">
+        <strong>Summary:</strong> <span id="summary">loading…</span>
+    </div>
+
+    <div class="controls">
+        <button id="refresh">Refresh</button>
+        <button id="exportCsv">Export CSV</button>
+    </div>
+
+    <table id="connTable">
+        <thead>
+            <tr>
+                <th>ip</th>
+                <th>url</th>
+                <th>user</th>
+                <th>roles</th>
+                <th>latency_ms</th>
+                <th>state</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        const summaryEl = document.getElementById('summary');
+        const tbody = document.querySelector('#connTable tbody');
+
+        function renderSummary(s) {
+            summaryEl.textContent = `total=${s.total}, open=${s.open}, avgLatency_ms=${s.avgLatency_ms ?? 'n/a'}`;
+        }
+        function renderConnections(list) {
+            tbody.innerHTML = '';
+            list.forEach(c => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${c.ip}</td><td>${c.url}</td><td>${c.authUser ?? ''}</td><td>${(c.authRoles || []).join(',')}</td><td>${c.latency_ms ?? ''}</td><td>${c.readyState}</td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function fetchConnections() {
+            fetch('/admin/connections').then(r => r.json()).then(payload => {
+                renderSummary(payload.summary || payload);
+                renderConnections(payload.results || payload.connections || []);
+            }).catch(console.error);
+        }
+
+        document.getElementById('refresh').addEventListener('click', fetchConnections);
+        document.getElementById('exportCsv').addEventListener('click', () => {
+            window.location = '/admin/export.csv';
+        });
+
+        // open dashboard WS
+        const ws = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host + '/admin-socket');
+        ws.onopen = () => console.log('dashboard ws open');
+        ws.onmessage = (ev) => {
+            try {
+                const m = JSON.parse(ev.data);
+                if (m.type === 'admin:init') {
+                    renderSummary(m.data.summary);
+                    renderConnections(m.data.connections?.results || m.data.connections || []);
+                } else if (m.type === 'admin:update') {
+                    // apply summary + optionally merge connection updates
+                    if (m.data.summary) renderSummary(m.data.summary);
+                }
+            } catch (e) { console.error(e); }
+        };
+        ws.onclose = () => console.log('dashboard ws closed');
+
+        // initial load
+        fetchConnections();
+    </script>
+</body>
+
+</html>

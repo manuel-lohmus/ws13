@@ -5,8 +5,10 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "skipFiles": [ "<node_internals>/**" ],
-      "program": "${workspaceFolder}/index.test.js",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/core/index.test.js",
       "cwd": "${workspaceFolder}",
       "console": "externalTerminal"
     }

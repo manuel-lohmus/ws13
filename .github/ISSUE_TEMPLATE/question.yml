@@ -1,0 +1,99 @@
+name: Question
+description: Ask a question about usage, API, examples, or design. Provide context and what you've tried.
+title: "[question] "
+labels: question
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for asking a question! Please provide enough context so we can answer
+        quickly.
+        Include environment details, code snippets, and what you have tried so far.
+
+  - type: input
+    id: summary
+    attributes:
+      label: Short summary
+      description: One-line summary of your question.
+      placeholder: e.g. "How to replay channel history to a newly connected client?"
+      validations:
+        required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Background and context
+      description: Describe the problem context, why you need this, and any relevant architecture details.
+      placeholder: |
+        Provide where you are using ws13, any relevant integrations, and the goal you want to
+        achieve.
+
+  - type: textarea
+    id: code
+    attributes:
+      label: Code sample
+      description: Minimal reproducible code snippet or configuration demonstrating your setup (wrap in triple backticks).
+      placeholder: |
+        // server snippet
+        const mgr = createChannelsManager({ historyLimit: 50 });
+        // client snippet
+        validations:
+          required: false
+
+  - type: textarea
+    id: tried
+    attributes:
+      label: What you tried
+      description: Steps you've already taken, references you checked, or workarounds you attempted.
+      placeholder: e.g. "Tried ch.replayTo(ws) and historyStore.list but clients still get nothing."
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected outcome
+      description: What you expect to happen or what the ideal answer would provide.
+      placeholder: e.g. "A short code example showing how to replay history on connect."
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual outcome
+      description: What happened instead (errors, logs, or behavior).
+      placeholder: e.g. "No messages are received by client; server logs show no errors."
+
+  - type: input
+    id: node_version
+    attributes:
+      label: Node.js version
+      description: Node.js version you are using (optional).
+      placeholder: v18.x
+
+  - type: input
+    id: os
+    attributes:
+      label: OS / environment
+      description: OS, container, or cloud environment (optional).
+      placeholder: e.g. Ubuntu 22.04, macOS 13
+
+  - type: input
+    id: ws13_version
+    attributes:
+      label: ws13 version
+      description: package.json version (optional).
+      placeholder: e.g. 1.0.9
+
+  - type: textarea
+    id: links
+    attributes:
+      label: Related links
+      description: Links to docs, examples, or issues you referenced.
+      placeholder: e.g. https://github.com/manuel-lohmus/ws13#readme
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional information
+      description: Anything else that might help (logs, screenshots, config).
+      placeholder: Remove any secrets before pasting.

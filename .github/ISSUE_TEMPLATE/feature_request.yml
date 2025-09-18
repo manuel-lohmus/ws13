@@ -1,0 +1,105 @@
+name: Feature request
+description: Suggest a new feature, enhancement, or improvement for ws13 — include motivation, proposed design, and acceptance criteria.
+title: "[feature] "
+labels: enhancement
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for proposing a feature. Please fill out the sections
+        below with as much detail as possible so we can evaluate
+        and implement it efficiently.
+
+  - type: input
+    id: summary
+    attributes:
+      label: Short summary
+      description: One-line summary of the proposed feature.
+      placeholder: e.g. "Add per-channel rate limiting"
+      validations:
+        required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: Describe the feature, how it should work, and any API changes or new components required.
+      placeholder: |
+        Describe the desired behaviour, example API, data model,
+        and any UI/CLI changes.
+      validations:
+        required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation and user value
+      description: Explain why this feature is needed and who benefits from it.
+      placeholder: |
+        Describe typical use-cases, scenarios, and the problem
+        this solves.
+  
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Describe other approaches or workarounds you evaluated and why they are not sufficient.
+      placeholder: |
+        e.g., use external proxy, implement in application code,
+        use third-party library.
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Clear, testable conditions that must be true for this feature to be considered complete.
+      placeholder: |
+        - Unit tests covering X
+        - Demo server with Y
+        - Admin dashboard exposes Z
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - High
+        - Medium
+        - Low
+      description: Estimate the priority/impact for your project.
+
+  - type: input
+    id: estimate
+    attributes:
+      label: Rough implementation estimate
+      description: Optional time/complexity estimate (e.g., "2-3 days", "medium", "small").
+  
+  - type: input
+    id: related_issue
+    attributes:
+      label: Related issue or RFC
+      description: Link to any related issue, PR, or design document.
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Example code or usage
+      description: Minimal example showing how you would like to use the feature (request/response, API snippets).
+      placeholder: |
+        // example usage
+        const mgr = createChannelsManager({ rateLimit: 100 });
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Mockups / diagrams
+      description: Paste image links, diagrams, or drawings that illustrate the feature.
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional notes
+      description: Any extra context, compatibility concerns, or migration notes.
+      placeholder: e.g., "backwards compatible with existing channels API"

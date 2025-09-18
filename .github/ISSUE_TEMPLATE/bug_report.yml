@@ -1,0 +1,118 @@
+name: Bug report
+description: Report a reproducible bug in the ws13 project — include steps, environment, minimal reproduction and logs.
+title: "[bug] "
+labels: bug
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug. Please fill out the fields below as completely as possible so we can reproduce and fix the issue quickly.
+
+  - type: input
+    id: summary
+    attributes:
+      label: Short summary
+      description: One-line summary of the bug (what happens).
+      placeholder: e.g. "Channel replay fails for large history"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Step-by-step instructions to reproduce the bug. Include exact commands, requests, or UI actions.
+      placeholder: |
+        1. Start server: `node examples/.../server.js`
+        2. Connect client with: `...`
+        3. Send: ...
+      validations:
+        required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What you expected to happen.
+      placeholder: The channel should replay the last 50 messages to the new subscriber.
+      validations:
+        required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What actually happened, including error messages, stack traces or HTTP responses.
+      placeholder: Server returns 500 and stack trace: ...
+      validations:
+        required: true
+
+  - type: input
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Link to a minimal repository, gist, or step-by-step snippet we can run to reproduce. Paste code or a public link.
+      placeholder: https://github.com/your/repro
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - Critical (data loss / crashing production)
+        - High (major feature broken)
+        - Medium (partial loss of functionality)
+        - Low (minor annoyance)
+      description: Select how severe this issue is for you.
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs, stack traces or error output
+      description: Paste the exact logs (remove secrets).
+      placeholder: Error: TypeError at ...
+
+  - type: input
+    id: node_version
+    attributes:
+      label: Node.js version
+      description: Node.js version used (e.g. v18.16.0)
+      placeholder: v18.x
+
+  - type: input
+    id: os
+    attributes:
+      label: OS / environment
+      description: OS and environment (e.g. Ubuntu 22.04, macOS 13, Docker image)
+      placeholder: Ubuntu 22.04
+
+  - type: input
+    id: ws13_version
+    attributes:
+      label: ws13 version
+      description: package.json version (e.g. 1.0.9)
+      placeholder: 1.0.9
+
+  - type: textarea
+    id: related
+    attributes:
+      label: Related configuration or code
+      description: Relevant config, snippets, or settings (channels config, historyStore settings, admin options). Remove any secrets.
+      placeholder: |
+        // channel manager init
+        const mgr = createChannelsManager({ historyLimit: 50, historyStore });
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots / recordings
+      description: Paste image links or short screen recordings that illustrate the issue.
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional notes
+      description: Anything else that might help debug (workarounds, frequency, related issues).
+      placeholder: Happens only when history size > 1000.
