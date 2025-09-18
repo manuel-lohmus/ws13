@@ -72,8 +72,7 @@ body:
     attributes:
       label: Relevant logs, stack traces or error output
       description: Paste the exact logs (remove secrets).
-      placeholder: 
-        Error: TypeError at ...
+      placeholder: Error TypeError at ...
 
   - type: input
     id: node_version
