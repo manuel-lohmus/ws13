@@ -28,8 +28,8 @@ body:
         1. Start server: `node examples/.../server.js`
         2. Connect client with: `...`
         3. Send: ...
-      validations:
-        required: true
+    validations:
+      required: true
 
   - type: textarea
     id: expected
@@ -37,17 +37,17 @@ body:
       label: Expected behavior
       description: What you expected to happen.
       placeholder: The channel should replay the last 50 messages to the new subscriber.
-      validations:
-        required: true
+    validations:
+      required: true
 
   - type: textarea
     id: actual
     attributes:
       label: Actual behavior
       description: What actually happened, including error messages, stack traces or HTTP responses.
-      placeholder: Server returns 500 and stack trace: ...
-      validations:
-        required: true
+      placeholder: Server returns 500 and stack trace ...
+    validations:
+      required: true
 
   - type: input
     id: reproduction
@@ -72,7 +72,8 @@ body:
     attributes:
       label: Relevant logs, stack traces or error output
       description: Paste the exact logs (remove secrets).
-      placeholder: Error: TypeError at ...
+      placeholder: 
+        Error: TypeError at ...
 
   - type: input
     id: node_version

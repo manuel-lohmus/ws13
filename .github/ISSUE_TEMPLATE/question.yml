@@ -18,8 +18,8 @@ body:
       label: Short summary
       description: One-line summary of your question.
       placeholder: e.g. "How to replay channel history to a newly connected client?"
-      validations:
-        required: true
+    validations:
+      required: true
 
   - type: textarea
     id: context
@@ -39,8 +39,8 @@ body:
         // server snippet
         const mgr = createChannelsManager({ historyLimit: 50 });
         // client snippet
-        validations:
-          required: false
+    validations:
+      required: false
 
   - type: textarea
     id: tried

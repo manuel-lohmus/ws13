@@ -18,7 +18,7 @@ body:
       label: Short summary
       description: One-line summary of the proposed feature.
       placeholder: e.g. "Add per-channel rate limiting"
-      validations:
+    validations:
         required: true
 
   - type: textarea
@@ -29,8 +29,8 @@ body:
       placeholder: |
         Describe the desired behaviour, example API, data model,
         and any UI/CLI changes.
-      validations:
-        required: true
+    validations:
+      required: true
 
   - type: textarea
     id: motivation
