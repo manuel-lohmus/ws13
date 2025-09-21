@@ -194,6 +194,7 @@ function createWebSocket({
     else {
         socket.on('error', errorHandling);
         socket.on('end', endHandling);
+        socket.on('close', endHandling);
         socket.on('data', incomingData);
         sendHandshakeResponse();
         heartbeatTimeout = setTimeout(heartbeat);
@@ -625,7 +626,8 @@ function createWebSocket({
     function sendData(payload, isFinal = true) {
 
         return sendFrames({ payload, isFin: isFinal }, function (err, length, opcode) {
-            pDebug(`Data > length: ${length} opcode: ${opcode}`, "ip", ws.ip);
+            if (err) { pError(`Data > `, 'ip', ws.ip, 'error', err); }
+            else { pDebug(`Data > length: ${length} opcode: ${opcode}`, 'ip', ws.ip); }
         }).catch(() => { });
     }
     function sendFrames(options = {}, callback) {
@@ -1216,6 +1218,7 @@ function createWebSocket({
             reconnectMaxDelay
         );
 
+        pDebug(`Reconnecting in ${delay}ms ...`, evt, "ip", ws.ip);
         reconnectState.attempts += 1;
         clearTimeout(reconnectState.timer);
         reconnectState.timer = setTimeout(function () {

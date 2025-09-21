@@ -34,6 +34,13 @@ All notable changes to this project are documented in this file.
 
 ---
 
+## [1.1.1] - 2025-09-21
+
+### Fixed
+ - Added missing socket 'close' handler. This improves client mode reconnection.
+
+---
+
 ## [1.1.0] - 2025-09-18
 
 ### Added
